@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, ChefHat, Users, Building2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import kitchenHero from "@/assets/kitchen-hero.jpg";
 
@@ -9,84 +9,79 @@ interface HeroSectionProps {
 
 const HeroSection = ({ onStartQuiz }: HeroSectionProps) => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Hero background image */}
+    <section className="relative min-h-screen flex items-end overflow-hidden">
+      {/* Full-bleed hero image */}
       <div className="absolute inset-0">
-        <img src={kitchenHero} alt="Modernt skandinaviskt kök" className="w-full h-full object-cover" width={1920} height={1080} />
-        <div className="absolute inset-0 bg-background/85 backdrop-blur-sm" />
+        <img
+          src={kitchenHero}
+          alt="Modernt skandinaviskt kök"
+          className="w-full h-full object-cover"
+          width={1920}
+          height={1080}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
       </div>
-      
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
+
+      <div className="container mx-auto px-6 relative z-10 pb-20 md:pb-28">
+        <div className="max-w-2xl">
+          <motion.p
+            className="text-xs md:text-sm tracking-[0.3em] uppercase text-white/70 mb-6 font-light"
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8 tracking-wide">
-              Sveriges smartaste köksförmedling
-            </span>
-          </motion.div>
+            Sveriges smartaste köksförmedling
+          </motion.p>
 
           <motion.h1
-            className="text-5xl md:text-7xl font-bold leading-[1.1] mb-6 tracking-tight"
-            initial={{ opacity: 0, y: 30 }}
+            className="text-4xl md:text-6xl lg:text-7xl font-light leading-[1.1] mb-6 text-white"
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.15 }}
           >
             Hitta ditt{" "}
-            <span className="text-primary italic">drömkök</span>
-            <br />
-            — helt enkelt
+            <em className="font-normal">drömkök</em>
           </motion.h1>
 
           <motion.p
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
-            initial={{ opacity: 0, y: 30 }}
+            className="text-base md:text-lg text-white/75 max-w-lg mb-10 leading-relaxed font-light"
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
-            Svara på några frågor om ditt nya kök och få skräddarsydda offerter 
+            Svara på några frågor och få skräddarsydda offerter
             från utvalda köksföretag. Kostnadsfritt och utan förpliktelser.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.45 }}
           >
             <Button
               size="lg"
               onClick={onStartQuiz}
-              className="text-lg px-8 py-6 rounded-full font-medium group"
+              className="bg-white text-foreground hover:bg-white/90 text-sm tracking-[0.15em] uppercase px-8 py-6 rounded-none font-medium group"
             >
               Kom igång
-              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="ml-3 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </motion.div>
-
-          {/* Trust indicators */}
-          <motion.div
-            className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            {[
-              { icon: ChefHat, title: "Utvalda köksföretag", desc: "Noggrant utvalda partners" },
-              { icon: Users, title: "Helt kostnadsfritt", desc: "Du betalar ingenting" },
-              { icon: Building2, title: "Jämför offerter", desc: "Få flera förslag att välja mellan" },
-            ].map((item, i) => (
-              <div key={i} className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-card/50 backdrop-blur-sm">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <item.icon className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="font-display font-semibold text-lg">{item.title}</h3>
-                <p className="text-muted-foreground text-sm">{item.desc}</p>
-              </div>
-            ))}
-          </motion.div>
         </div>
+
+        {/* Minimal trust bar */}
+        <motion.div
+          className="mt-16 flex flex-wrap gap-x-10 gap-y-3"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
+        >
+          {["Utvalda köksföretag", "Helt kostnadsfritt", "Jämför offerter"].map((text, i) => (
+            <span key={i} className="text-xs tracking-[0.2em] uppercase text-white/50 font-light">
+              {text}
+            </span>
+          ))}
+        </motion.div>
       </div>
     </section>
   );
