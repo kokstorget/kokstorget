@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, ChefHat, Users, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import kitchenHero from "@/assets/kitchen-hero.jpg";
 
 interface HeroSectionProps {
   onStartQuiz: () => void;
