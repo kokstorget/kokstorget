@@ -1,16 +1,22 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import SiteHeader from "@/components/SiteHeader";
+import HeroSection from "@/components/HeroSection";
+import KitchenQuestionnaire from "@/components/KitchenQuestionnaire";
+import ThankYouSection from "@/components/ThankYouSection";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+type View = "hero" | "quiz" | "thankyou";
+
+const Index = () => {
+  const [view, setView] = useState<View>("hero");
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen">
+      <SiteHeader />
+      {view === "hero" && <HeroSection onStartQuiz={() => setView("quiz")} />}
+      {view === "quiz" && <KitchenQuestionnaire onComplete={() => setView("thankyou")} />}
+      {view === "thankyou" && <ThankYouSection />}
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
