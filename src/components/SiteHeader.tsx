@@ -3,16 +3,18 @@ import { motion } from "framer-motion";
 const SiteHeader = () => {
   return (
     <motion.header
-      className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50"
-      initial={{ y: -60 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
+      className="fixed top-0 left-0 right-0 z-50"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8, delay: 0.2 }}
     >
-      <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="/" className="font-display text-xl font-bold tracking-tight">
-          Köks<span className="text-primary">torget</span>
+      <div className="container mx-auto px-6 h-20 flex items-center justify-between">
+        <a href="/" className="text-white">
+          <span className="font-display text-2xl font-light tracking-wide">
+            Kökstorget
+          </span>
         </a>
-        <span className="text-sm text-muted-foreground hidden sm:block">
+        <span className="text-[11px] tracking-[0.25em] uppercase text-white/60 hidden sm:block font-light">
           Kostnadsfritt · Utan förpliktelser
         </span>
       </div>
