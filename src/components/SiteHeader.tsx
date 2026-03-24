@@ -44,6 +44,16 @@ const SiteHeader = ({ variant = "transparent" }: SiteHeaderProps) => {
           >
             Kundcase
           </Link>
+          <Link
+            to="/om-oss"
+            className={`text-[11px] tracking-[0.25em] uppercase font-light transition-colors ${
+              isTransparent
+                ? "text-white/70 hover:text-white"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Om oss
+          </Link>
           <span
             className={`text-[11px] tracking-[0.25em] uppercase hidden sm:block font-light ${
               isTransparent ? "text-white/50" : "text-muted-foreground"
