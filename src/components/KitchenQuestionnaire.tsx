@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Send, Check } from "lucide-react";
+import { ArrowLeft, ArrowRight, Send, Check, Camera, X, ImagePlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,7 +10,7 @@ interface StepConfig {
   id: string;
   question: string;
   subtitle: string;
-  type: "single" | "multi" | "text" | "contact";
+  type: "single" | "multi" | "text" | "contact" | "images";
   options?: string[];
 }
 
@@ -50,6 +50,12 @@ const steps: StepConfig[] = [
     type: "text",
   },
   {
+    id: "images",
+    question: "Bifoga bilder på ditt nuvarande kök",
+    subtitle: "Hjälper köksföretagen ge bättre offerter (valfritt)",
+    type: "images",
+  },
+  {
     id: "contact",
     question: "Dina kontaktuppgifter",
     subtitle: "Så att köksföretagen kan kontakta dig",
@@ -61,7 +67,9 @@ const KitchenQuestionnaire = ({ onComplete }: { onComplete: () => void }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string | string[]>>({});
   const [contactInfo, setContactInfo] = useState({ name: "", email: "", phone: "", city: "" });
+  const [uploadedImages, setUploadedImages] = useState<{ file: File; preview: string }[]>([]);
   const [direction, setDirection] = useState(1);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const step = steps[currentStep];
   const progress = ((currentStep + 1) / steps.length) * 100;
@@ -84,11 +92,36 @@ const KitchenQuestionnaire = ({ onComplete }: { onComplete: () => void }) => {
     return answer === option;
   };
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    const newImages = Array.from(files).slice(0, 5 - uploadedImages.length).map((file) => ({
+      file,
+      preview: URL.createObjectURL(file),
+    }));
+
+    if (uploadedImages.length + newImages.length > 5) {
+      toast.error("Du kan ladda upp max 5 bilder");
+      return;
+    }
+
+    setUploadedImages((prev) => [...prev, ...newImages]);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const removeImage = (index: number) => {
+    setUploadedImages((prev) => {
+      URL.revokeObjectURL(prev[index].preview);
+      return prev.filter((_, i) => i !== index);
+    });
+  };
+
   const canProceed = () => {
     if (step.type === "contact") {
       return contactInfo.name && contactInfo.email && contactInfo.phone && contactInfo.city;
     }
-    if (step.type === "text") return true;
+    if (step.type === "text" || step.type === "images") return true;
     const answer = answers[step.id];
     if (Array.isArray(answer)) return answer.length > 0;
     return !!answer;
@@ -180,6 +213,60 @@ const KitchenQuestionnaire = ({ onComplete }: { onComplete: () => void }) => {
                 value={(answers[step.id] as string) || ""}
                 onChange={(e) => setAnswers({ ...answers, [step.id]: e.target.value })}
               />
+            )}
+
+            {step.type === "images" && (
+              <div>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  className="hidden"
+                  onChange={handleImageUpload}
+                />
+
+                {/* Upload area */}
+                {uploadedImages.length < 5 && (
+                  <button
+                    onClick={() => fileInputRef.current?.click()}
+                    className="w-full border-2 border-dashed border-border rounded-xl p-8 flex flex-col items-center gap-3 text-muted-foreground hover:border-primary/40 hover:text-foreground transition-colors"
+                  >
+                    <ImagePlus className="h-10 w-10" />
+                    <span className="text-sm font-medium">Klicka för att ladda upp bilder</span>
+                    <span className="text-xs text-muted-foreground">Max 5 bilder · JPG, PNG</span>
+                  </button>
+                )}
+
+                {/* Preview grid */}
+                {uploadedImages.length > 0 && (
+                  <div className="grid grid-cols-3 gap-3 mt-4">
+                    {uploadedImages.map((img, i) => (
+                      <div key={i} className="relative aspect-square rounded-xl overflow-hidden border border-border group">
+                        <img
+                          src={img.preview}
+                          alt={`Köksbild ${i + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                        <button
+                          onClick={() => removeImage(i)}
+                          className="absolute top-2 right-2 bg-background/80 backdrop-blur-sm rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          <X className="h-4 w-4 text-foreground" />
+                        </button>
+                      </div>
+                    ))}
+                    {uploadedImages.length < 5 && (
+                      <button
+                        onClick={() => fileInputRef.current?.click()}
+                        className="aspect-square rounded-xl border-2 border-dashed border-border flex items-center justify-center text-muted-foreground hover:border-primary/40 transition-colors"
+                      >
+                        <Camera className="h-6 w-6" />
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
             )}
 
             {step.type === "contact" && (
