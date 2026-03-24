@@ -34,6 +34,16 @@ const SiteHeader = ({ variant = "transparent" }: SiteHeaderProps) => {
           >
             Inspiration
           </Link>
+          <Link
+            to="/kundcase"
+            className={`text-[11px] tracking-[0.25em] uppercase font-light transition-colors ${
+              isTransparent
+                ? "text-white/70 hover:text-white"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Kundcase
+          </Link>
           <span
             className={`text-[11px] tracking-[0.25em] uppercase hidden sm:block font-light ${
               isTransparent ? "text-white/50" : "text-muted-foreground"
