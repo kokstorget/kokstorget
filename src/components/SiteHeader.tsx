@@ -57,13 +57,6 @@ const SiteHeader = ({ variant = "transparent" }: SiteHeaderProps) => {
           >
             Om oss
           </Link>
-          <span
-            className={`text-[11px] tracking-[0.25em] uppercase hidden sm:block font-light ${
-              isTransparent ? "text-white/50" : "text-muted-foreground"
-            }`}
-          >
-            Kostnadsfritt
-          </span>
         </nav>
       </div>
     </motion.header>
