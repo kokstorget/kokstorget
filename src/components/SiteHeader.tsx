@@ -18,9 +18,12 @@ const SiteHeader = ({ variant = "transparent" }: SiteHeaderProps) => {
       transition={{ duration: 0.8, delay: 0.2 }}
     >
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-        <Link to="/" className={isTransparent ? "text-white" : "text-foreground"}>
+        <Link to="/" className={`flex flex-col ${isTransparent ? "text-white" : "text-foreground"}`}>
           <span className="font-display text-2xl font-light tracking-wide">
             Kökstorget
+          </span>
+          <span className={`text-[9px] tracking-[0.2em] uppercase font-light ${isTransparent ? "text-white/50" : "text-muted-foreground"}`}>
+            Sveriges smartaste köksförmedling
           </span>
         </Link>
         <nav className="flex items-center gap-8">

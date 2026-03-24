@@ -24,15 +24,6 @@ const HeroSection = ({ onStartQuiz }: HeroSectionProps) => {
 
       <div className="container mx-auto px-6 relative z-10 pb-20 md:pb-28">
         <div className="max-w-2xl">
-          <motion.p
-            className="text-xs md:text-sm tracking-[0.3em] uppercase text-white/70 mb-6 font-light"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            Sveriges smartaste köksförmedling
-          </motion.p>
-
           <motion.h1
             className="text-4xl md:text-6xl lg:text-7xl font-light leading-[1.1] mb-6 text-white"
             initial={{ opacity: 0, y: 20 }}
