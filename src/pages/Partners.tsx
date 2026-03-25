@@ -1,11 +1,17 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
+import partnerMarbodal from "@/assets/partner-marbodal.jpg";
+import partnerLucks from "@/assets/partner-lucks.jpg";
+import partnerBallingslov from "@/assets/partner-ballingslov.jpg";
+import partnerNordiska from "@/assets/partner-nordiska.jpg";
+import partnerHimle from "@/assets/partner-himle.jpg";
 
 interface Partner {
   id: number;
   name: string;
   description: string;
+  image: string;
 }
 
 const partners: Partner[] = [
