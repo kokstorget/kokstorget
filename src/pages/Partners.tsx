@@ -1,41 +1,52 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
+import partnerMarbodal from "@/assets/partner-marbodal.jpg";
+import partnerLucks from "@/assets/partner-lucks.jpg";
+import partnerBallingslov from "@/assets/partner-ballingslov.jpg";
+import partnerNordiska from "@/assets/partner-nordiska.jpg";
+import partnerHimle from "@/assets/partner-himle.jpg";
 
 interface Partner {
   id: number;
   name: string;
   description: string;
+  image: string;
 }
 
 const partners: Partner[] = [
   {
     id: 1,
     name: "Marbodal Göteborg",
+    image: partnerMarbodal,
     description:
       "Marbodal är ett av Sveriges mest anrika köksmärken med rötter sedan 1924. Från fabriken i Tidaholm levererar de kök som kombinerar svensk hantverkstradition med modern design. Marbodal Göteborg erbjuder ett brett sortiment – från tidlösa klassiker till samtida, minimalistiska kök – alltid med fokus på hållbarhet och kvalitet.",
   },
   {
     id: 2,
     name: "Lucks by Robo",
+    image: partnerLucks,
     description:
       "Lucks by Robo representerar nästa generation av köksdesign där innovation möter funktion. Med smarta förvaringslösningar och modern skandinavisk estetik skapar de kök som är lika vackra som praktiska. Deras fokus på hållbara material och energieffektiva lösningar gör dem till ett framtidssäkrat val.",
   },
   {
     id: 3,
     name: "Ballingslöv Kungsbacka",
+    image: partnerBallingslov,
     description:
       "Ballingslöv har sedan 1929 varit synonymt med svenska kvalitetskök. Med ett imponerande utbud av stilar, material och färger erbjuder Ballingslöv Kungsbacka skräddarsydda kökslösningar för alla smaker. Varje kök tillverkas med omsorg i Sverige och kombinerar tidlös elegans med modern funktionalitet.",
   },
   {
     id: 4,
     name: "Nordiska Kök",
+    image: partnerNordiska,
     description:
       "Nordiska Kök är kända för sina handbyggda, unika kök som blandar traditionellt hantverk med samtida design. Varje kök är ett konstverk – skräddarsytt efter kundens önskemål med naturliga material som massivt trä, natursten och mässing. Perfekt för den som söker ett kök med karaktär och själ.",
   },
   {
     id: 5,
     name: "Himle Kök",
+    image: partnerHimle,
     description:
       "Himle Kök erbjuder exklusiva kökslösningar med fokus på hantverk och personlig service. Med bas i Västsverige skapar de kök som speglar den skandinaviska livsstilen – rena linjer, naturliga material och genomtänkta detaljer. Från första skiss till färdig installation följer Himle Kök med hela vägen.",
   },
@@ -98,18 +109,28 @@ const Partners = () => {
                   ease: [0.22, 1, 0.36, 1],
                 }}
               >
-                <div className="grid md:grid-cols-[1fr_2fr] gap-8 items-start">
-                  <div>
+                <div className={`grid md:grid-cols-2 gap-10 items-start ${index % 2 === 1 ? "md:direction-rtl" : ""}`}>
+                  <div className="overflow-hidden rounded-sm">
+                    <img
+                      src={partner.image}
+                      alt={`Kök av ${partner.name}`}
+                      loading="lazy"
+                      width={1024}
+                      height={768}
+                      className="w-full h-64 md:h-80 object-cover hover:scale-105 transition-transform duration-700"
+                    />
+                  </div>
+                  <div className="flex flex-col justify-center">
                     <span className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground block mb-3">
                       Partner {String(index + 1).padStart(2, "0")}
                     </span>
-                    <h2 className="font-display text-2xl md:text-3xl font-light text-foreground">
+                    <h2 className="font-display text-2xl md:text-3xl font-light text-foreground mb-4">
                       {partner.name}
                     </h2>
+                    <p className="text-muted-foreground font-light leading-relaxed text-sm md:text-base">
+                      {partner.description}
+                    </p>
                   </div>
-                  <p className="text-muted-foreground font-light leading-relaxed text-sm md:text-base">
-                    {partner.description}
-                  </p>
                 </div>
               </motion.article>
             ))}
