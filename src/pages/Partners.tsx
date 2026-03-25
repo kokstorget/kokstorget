@@ -65,14 +65,14 @@ const Partners = () => {
           <motion.h1
             className="font-display text-4xl md:text-6xl font-light text-foreground leading-tight mb-8"
             {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.1 }}
+            transition={{ ...fadeUp.transition, delay: 0.1 } as const}
           >
             Noggrant utvalda köksföretag
           </motion.h1>
           <motion.p
             className="text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto"
             {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.2 }}
+            transition={{ ...fadeUp.transition, delay: 0.2 } as const}
           >
             Vi samarbetar med Sveriges främsta köksföretag för att kunna erbjuda
             dig de bästa alternativen. Varje partner är handplockad utifrån
