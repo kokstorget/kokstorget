@@ -48,6 +48,16 @@ const SiteHeader = ({ variant = "transparent" }: SiteHeaderProps) => {
             Kundcase
           </Link>
           <Link
+            to="/partners"
+            className={`text-[11px] tracking-[0.25em] uppercase font-light transition-colors ${
+              isTransparent
+                ? "text-white/70 hover:text-white"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Partners
+          </Link>
+          <Link
             to="/om-oss"
             className={`text-[11px] tracking-[0.25em] uppercase font-light transition-colors ${
               isTransparent
