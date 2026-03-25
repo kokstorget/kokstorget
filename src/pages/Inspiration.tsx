@@ -2,10 +2,9 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
-import trendBogarden from "@/assets/trend-bogarden.jpg";
-import trendHimlekok from "@/assets/trend-himlekok.jpg";
-import trendMarbodal from "@/assets/trend-marbodal.jpg";
-import trendLucks from "@/assets/trend-lucks.jpg";
+import trendNatural from "@/assets/trend-natural.jpg";
+import trendColor from "@/assets/trend-color.jpg";
+import trendRenovation from "@/assets/trend-renovation.jpg";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -16,28 +15,22 @@ const fadeUp = {
 
 const trends = [
   {
-    image: trendBogarden,
-    tag: "Bogården Kök",
-    title: "Naturliga material & tidlös värme",
-    body: "Bogården Kök är kända för sina handplockade naturmaterial — massiv ek, natursten och handgjord keramik. Resultatet blir kök som åldras vackert och känns genuina. Öppna hyllor och mjuka trädetaljer skapar en ombonad skandinavisk känsla.",
+    image: trendNatural,
+    tag: "Trend 2026",
+    title: "Naturliga material tar över",
+    body: "Massivt trä, natursten och handgjord keramik dominerar årets kök. Trenden pekar mot autentiska material som åldras vackert — bort från plastiga laminat och mot äkta ek, valnöt och kalksten. Öppna hyllor ersätter överskåp för en luftigare känsla.",
   },
   {
-    image: trendHimlekok,
-    tag: "Himlekök",
-    title: "Ljust, rent & modernt",
-    body: "Himlekök levererar den skandinaviska drömmen med rena linjer, greeppfria luckor och ljusa marmorytor. Deras kök andas luft och ljus — perfekt för dig som vill ha ett minimalistiskt uttryck utan att tumma på kvaliteten.",
+    image: trendColor,
+    tag: "Färg & form",
+    title: "Djärva färger i köket",
+    body: "Mörkgrönt, djupblått och varm terrakotta har blivit de nya neutrala. Kombinerat med mässingsdetaljer och marmorskivor skapas ett kök med både personlighet och tidlös elegans. Våga bryta mot det helsvita — ditt kök förtjänar karaktär.",
   },
   {
-    image: trendMarbodal,
-    tag: "Marbodal Kök",
-    title: "Klassisk elegans med moderna detaljer",
-    body: "Marbodal kombinerar svenskt kökstradition med moderna trender. Deras mörkgröna luckor med mässingshandtag och massiva träbänkskivor skapar kök med karaktär — en tidlös investering som aldrig går ur stil.",
-  },
-  {
-    image: trendLucks,
-    tag: "Lucks by Robo",
-    title: "Djärvt & industriellt",
-    body: "Lucks by Robo vågar där andra inte gör det — djupblå fronter, betongbänkskivor och industriella belysningsdetaljer. För dig som vill ha ett kök som sticker ut och gör ett statement. Modernt, unikt och fullt av personlighet.",
+    image: trendRenovation,
+    tag: "Renovering",
+    title: "Att tänka på vid köksrenovering",
+    body: "En köksrenovering är en av bostadens största investeringar. Planera noga: börja med layout och arbetsflöde, inte bara estetik. Tänk på belysning i tre lager (allmän, arbets- och stämningsbelysning), förvaring som faktiskt fungerar, och välj vitvaror som matchar era matlagningsvanor.",
   },
 ];
 
