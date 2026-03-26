@@ -11,12 +11,12 @@ const SiteHeader = ({ variant = "transparent" }: SiteHeaderProps) => {
   return (
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 ${
-        isTransparent ? "" : "bg-background/95 backdrop-blur-md border-b border-border/50"
-      }`}
+      isTransparent ? "" : "bg-background/95 backdrop-blur-md border-b border-border/50"}`
+      }
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.8, delay: 0.2 }}
-    >
+      transition={{ duration: 0.8, delay: 0.2 }}>
+      
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
         <Link to="/" className={`flex flex-col ${isTransparent ? "text-white" : "text-foreground"}`}>
           <span className="font-display text-2xl font-light tracking-wide">
@@ -30,57 +30,57 @@ const SiteHeader = ({ variant = "transparent" }: SiteHeaderProps) => {
           <Link
             to="/inspiration"
             className={`text-[11px] tracking-[0.25em] uppercase font-light transition-colors ${
-              isTransparent
-                ? "text-white/70 hover:text-white"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
+            isTransparent ?
+            "text-white/70 hover:text-white" :
+            "text-muted-foreground hover:text-foreground"}`
+            }>
+            
             Inspiration
           </Link>
           <Link
             to="/kundcase"
             className={`text-[11px] tracking-[0.25em] uppercase font-light transition-colors ${
-              isTransparent
-                ? "text-white/70 hover:text-white"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
+            isTransparent ?
+            "text-white/70 hover:text-white" :
+            "text-muted-foreground hover:text-foreground"}`
+            }>
+            
             Kundcase
           </Link>
           <Link
             to="/partners"
             className={`text-[11px] tracking-[0.25em] uppercase font-light transition-colors ${
-              isTransparent
-                ? "text-white/70 hover:text-white"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
+            isTransparent ?
+            "text-white/70 hover:text-white" :
+            "text-muted-foreground hover:text-foreground"}`
+            }>
+            
             Partners
           </Link>
           <Link
             to="/om-oss"
             className={`text-[11px] tracking-[0.25em] uppercase font-light transition-colors ${
-              isTransparent
-                ? "text-white/70 hover:text-white"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
+            isTransparent ?
+            "text-white/70 hover:text-white" :
+            "text-muted-foreground hover:text-foreground"}`
+            }>
+            
             Om oss
           </Link>
           <Link
             to="/anslut"
             className={`text-[11px] tracking-[0.25em] uppercase font-light transition-colors ${
-              isTransparent
-                ? "text-white/70 hover:text-white"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            Anslut
+            isTransparent ?
+            "text-white/70 hover:text-white" :
+            "text-muted-foreground hover:text-foreground"}`
+            }>
+            
+            Anslut Företag 
           </Link>
         </nav>
       </div>
-    </motion.header>
-  );
+    </motion.header>);
+
 };
 
 export default SiteHeader;
