@@ -2,68 +2,77 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
-import trendNatural from "@/assets/trend-natural.jpg";
-import trendColor from "@/assets/trend-color.jpg";
-import trendRenovation from "@/assets/trend-renovation.jpg";
 
-const fadeUp = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.7 },
-};
+import inspoRustic from "@/assets/inspo-rustic-classic.jpg";
+import inspoDarkGreen from "@/assets/inspo-dark-green.jpg";
+import inspoShaker from "@/assets/inspo-shaker-white.jpg";
+import inspoJapandi from "@/assets/inspo-japandi.jpg";
+import inspoNavy from "@/assets/inspo-navy.jpg";
+import inspoCottage from "@/assets/inspo-cottage.jpg";
+import inspoBeige from "@/assets/inspo-beige-fluted.jpg";
+import inspoIndustrial from "@/assets/inspo-industrial.jpg";
+import inspoTerracotta from "@/assets/inspo-terracotta.jpg";
 
-const trends = [
-  {
-    image: trendNatural,
-    tag: "Trend 2026",
-    title: "Naturliga material tar över",
-    body: "Massivt trä, natursten och handgjord keramik dominerar årets kök. Trenden pekar mot autentiska material som åldras vackert — bort från plastiga laminat och mot äkta ek, valnöt och kalksten. Öppna hyllor ersätter överskåp för en luftigare känsla.",
-  },
-  {
-    image: trendColor,
-    tag: "Färg & form",
-    title: "Djärva färger i köket",
-    body: "Mörkgrönt, djupblått och varm terrakotta har blivit de nya neutrala. Kombinerat med mässingsdetaljer och marmorskivor skapas ett kök med både personlighet och tidlös elegans. Våga bryta mot det helsvita — ditt kök förtjänar karaktär.",
-  },
-  {
-    image: trendRenovation,
-    tag: "Renovering",
-    title: "Att tänka på vid köksrenovering",
-    body: "En köksrenovering är en av bostadens största investeringar. Planera noga: börja med layout och arbetsflöde, inte bara estetik. Tänk på belysning i tre lager (allmän, arbets- och stämningsbelysning), förvaring som faktiskt fungerar, och välj vitvaror som matchar era matlagningsvanor.",
-  },
-];
+interface InspirationProject {
+  image: string;
+  title: string;
+  description: string;
+}
 
-const tips = [
+const projects: InspirationProject[] = [
   {
-    number: "01",
-    title: "Sätt budget innan du drömmer",
-    text: "Bestäm en realistisk budget tidigt. Ett kök kan kosta allt från 80 000 till 500 000+ kronor. Inkludera installation, el, VVS och oförutsedda kostnader — lägg alltid till 10–15% marginal.",
+    image: inspoRustic,
+    title: "Det klassiska köket med rustik elegans",
+    description:
+      "Traditionell charm möter skandinavisk design — ett tidlöst kök i varm ek med marmorbänkskiva och mässingsdetaljer som skapar en elegant och inbjudande helhet.",
   },
   {
-    number: "02",
-    title: "Prioritera arbetsytan",
-    text: "Tänk i 'arbetstriangeln' mellan spis, diskho och kyl. Avstånden ska vara effektiva men inte trånga. Minst 60 cm fritt utrymme på vardera sidan om spisen gör stor skillnad i vardagen.",
+    image: inspoJapandi,
+    title: "Det ljusa Japandi-köket",
+    description:
+      "Minimalistiskt kök i ljus ek där naturlig värme möter arkitektonisk precision. Betongbänkskiva och rena linjer skapar ett balanserat, harmoniskt uttryck.",
   },
   {
-    number: "03",
-    title: "Välj hållbara material",
-    text: "Bänkskivor i kvarts eller granit håller i decennier. Massivt trä kräver underhåll men åldras vackert. Undvik billiga lösningar som ser bra ut i butik men slits snabbt — köket ska hålla i 20+ år.",
+    image: inspoDarkGreen,
+    title: "Moderna köket i djupgrönt",
+    description:
+      "Handtagslösa luckor i matt mörkgrönt kombinerat med terrazzobänkskiva och skandinavisk minimalism — ett modigt val som ger köket stark personlighet.",
   },
   {
-    number: "04",
-    title: "Anlita rätt köksföretag",
-    text: "Jämför alltid minst tre offerter. Kontrollera referenser, se om de erbjuder garanti och fråga exakt vad som ingår. Genom Kökstorget matchar vi dig med kvalitetssäkrade partners kostnadsfritt.",
+    image: inspoShaker,
+    title: "Det ljusa shakerköket",
+    description:
+      "Klassiskt shakerkök i ljusa toner med marmorstänkskydd, generös köksö och varma trägolv. En tidlös design som aldrig går ur mode.",
   },
   {
-    number: "05",
-    title: "Planera belysningen noggrant",
-    text: "Bra belysning förvandlar ett kök. Använd spotlights under överskåp för arbetsytor, en vacker taklampa över matplatsen och dimbar allmänbelysning. LED-lister i socklar ger en modern touch.",
+    image: inspoNavy,
+    title: "Eleganta köket i marinblått",
+    description:
+      "Djupblå luckor med mässingsbeslag, Calcatta-marmor och fiskbensgolv i ek skapar ett dramatiskt och lyxigt kök med stark karaktär.",
   },
   {
-    number: "06",
-    title: "Tänk på förvaring",
-    text: "Utdragslådor istället för vanliga skåp, hörnkaruseller, kryddhyllor i lådfronter — smart förvaring gör vardagen enklare. Räkna ut hur mycket förvaring ni faktiskt behöver innan ni bestämmer layout.",
+    image: inspoBeige,
+    title: "Raffinerade köket med räfflade fronter",
+    description:
+      "Eleganta räfflade fronter i sandbeige, kvartsitbänkskiva och integrerade vitvaror. Mjuk belysning och rena ytor för en sofistikerad känsla.",
+  },
+  {
+    image: inspoCottage,
+    title: "Träköket i fjällstugan",
+    description:
+      "Rustikt kök med synliga bjälkar, natursten och massiv träbänk som smälter samman med den omgivande naturen. Värme och autenticitet i varje detalj.",
+  },
+  {
+    image: inspoIndustrial,
+    title: "Det industriella köket",
+    description:
+      "Rostfria ytor, betongväggar och öppna hyllor i stål och trä. Professionell spis och loftkänsla för den som älskar rå, urban design.",
+  },
+  {
+    image: inspoTerracotta,
+    title: "Medelhavsinspirerade köket",
+    description:
+      "Varma terrakottatoner, valvbågar och naturstengolv skapar en unik fusion av skandinavisk minimalism och medelhavets värme.",
   },
 ];
 
@@ -73,9 +82,13 @@ const Inspiration = () => {
       <SiteHeader variant="solid" />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="container mx-auto max-w-4xl">
-          <motion.div {...fadeUp}>
+      <section className="pt-32 pb-16 px-6">
+        <div className="container mx-auto max-w-4xl text-center">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
             <Link
               to="/"
               className="inline-flex items-center gap-2 text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-foreground transition-colors mb-12"
@@ -85,122 +98,96 @@ const Inspiration = () => {
             </Link>
           </motion.div>
 
-          <motion.p
-            className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4 font-light"
-            {...fadeUp}
-          >
-            Inspiration & tips
-          </motion.p>
           <motion.h1
-            className="text-4xl md:text-6xl font-light leading-[1.1] mb-6"
-            {...fadeUp}
+            className="font-display text-4xl md:text-6xl font-light leading-[1.1] mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            Kökstrender <em className="font-normal">2026</em>
+            Köksinspiration
           </motion.h1>
           <motion.p
-            className="text-lg text-muted-foreground max-w-2xl leading-relaxed font-light"
-            {...fadeUp}
+            className="text-muted-foreground max-w-2xl mx-auto leading-relaxed font-light text-lg mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
-            Utforska årets hetaste kökstrender och få praktiska tips inför din
-            köksrenovering. Kunskap som hjälper dig fatta smartare beslut.
+            Inspireras av kvalitetskök i skandinavisk design. Här nedan hittar
+            du köksinspiration från våra mest populära projekt och partners.
+          </motion.p>
+          <motion.p
+            className="text-sm text-muted-foreground font-light"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+          >
+            Se{" "}
+            <Link
+              to="/"
+              className="underline underline-offset-4 hover:text-foreground transition-colors font-medium"
+            >
+              pris via våra partners
+            </Link>
           </motion.p>
         </div>
       </section>
 
-      {/* Trend articles */}
+      {/* Gallery grid — 3 columns like Nordiska Kök */}
       <section className="pb-24 px-6">
-        <div className="container mx-auto max-w-5xl space-y-24">
-          {trends.map((trend, i) => (
-            <motion.article
-              key={i}
-              className={`grid md:grid-cols-2 gap-10 md:gap-16 items-center ${
-                i % 2 === 1 ? "md:direction-rtl" : ""
-              }`}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-            >
-              <div className={i % 2 === 1 ? "md:order-2" : ""}>
-                <img
-                  src={trend.image}
-                  alt={trend.title}
-                  className="w-full aspect-[3/2] object-cover"
-                  loading="lazy"
-                  width={1200}
-                  height={800}
-                />
-              </div>
-              <div className={i % 2 === 1 ? "md:order-1" : ""}>
-                <span className="text-xs tracking-[0.25em] uppercase text-muted-foreground font-light">
-                  {trend.tag}
-                </span>
-                <h2 className="text-2xl md:text-3xl font-light mt-3 mb-5 leading-tight">
-                  {trend.title}
-                </h2>
-                <p className="text-muted-foreground leading-relaxed font-light">
-                  {trend.body}
-                </p>
-              </div>
-            </motion.article>
-          ))}
-        </div>
-      </section>
-
-      {/* Divider */}
-      <div className="container mx-auto max-w-5xl px-6">
-        <hr className="border-border" />
-      </div>
-
-      {/* Renovation tips */}
-      <section className="py-24 px-6">
-        <div className="container mx-auto max-w-4xl">
-          <motion.div className="mb-16" {...fadeUp}>
-            <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4 font-light">
-              Guide
-            </p>
-            <h2 className="text-3xl md:text-5xl font-light leading-tight">
-              Att tänka på vid <em className="font-normal">köksrenovering</em>
-            </h2>
-          </motion.div>
-
-          <div className="grid gap-0">
-            {tips.map((tip, i) => (
-              <motion.div
+        <div className="container mx-auto max-w-6xl">
+          <div className="grid md:grid-cols-3 gap-8">
+            {projects.map((project, i) => (
+              <motion.article
                 key={i}
-                className="grid md:grid-cols-[80px_1fr] gap-4 md:gap-8 py-8 border-t border-border last:border-b"
-                initial={{ opacity: 0, y: 20 }}
+                className="group cursor-pointer"
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
+                transition={{ duration: 0.6, delay: (i % 3) * 0.1 }}
               >
-                <span className="font-display text-3xl text-muted-foreground/40 font-light">
-                  {tip.number}
-                </span>
-                <div>
-                  <h3 className="text-lg font-medium mb-2">{tip.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed font-light max-w-2xl">
-                    {tip.text}
-                  </p>
+                <div className="overflow-hidden mb-5">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading={i < 3 ? undefined : "lazy"}
+                    width={1200}
+                    height={800}
+                  />
                 </div>
-              </motion.div>
+                <h3 className="font-display text-lg md:text-xl font-light mb-2 group-hover:underline underline-offset-4 transition-all">
+                  {project.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed font-light">
+                  {project.description}
+                </p>
+              </motion.article>
             ))}
           </div>
         </div>
       </section>
 
+      {/* Divider */}
+      <div className="container mx-auto max-w-6xl px-6">
+        <hr className="border-border" />
+      </div>
+
       {/* CTA */}
       <section className="py-24 px-6 bg-primary text-primary-foreground">
         <div className="container mx-auto max-w-3xl text-center">
-          <motion.div {...fadeUp}>
-            <h2 className="text-3xl md:text-4xl font-light mb-6">
-              Redo att förverkliga ditt <em className="font-normal">drömkök</em>?
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <h2 className="font-display text-3xl md:text-4xl font-light mb-6">
+              Redo att förverkliga ditt{" "}
+              <em className="font-normal">drömkök</em>?
             </h2>
             <p className="text-primary-foreground/70 mb-10 font-light max-w-xl mx-auto">
               Svara på några enkla frågor och få skräddarsydda offerter från
-              utvalda köksföretag — helt kostnadsfritt.
+              utvalda köksföretag.
             </p>
             <Link
               to="/"
@@ -218,7 +205,8 @@ const Inspiration = () => {
         <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <span className="font-display text-xl font-light">Kökstorget</span>
           <span className="text-xs text-muted-foreground tracking-wide">
-            © {new Date().getFullYear()} Kökstorget. Alla rättigheter förbehållna.
+            © {new Date().getFullYear()} Kökstorget. Alla rättigheter
+            förbehållna.
           </span>
         </div>
       </footer>
