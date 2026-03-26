@@ -11,6 +11,41 @@ const fadeUp = {
   transition: { duration: 0.7 },
 };
 
+const faqs = [
+  {
+    question: "Kostar det något att använda Kökstorget?",
+    answer: "Nej, vår tjänst är helt kostnadsfri för dig som privatperson. Vi finansieras av våra partnerföretag som betalar för att få kontakt med motiverade köksköpare.",
+  },
+  {
+    question: "Hur fungerar matchningen med köksföretag?",
+    answer: "Du svarar på några enkla frågor om ditt drömkök — stil, budget, tidsplan och önskemål. Baserat på dina svar matchar vi dig med upp till tre kvalitetssäkrade köksföretag i ditt område som passar just ditt projekt.",
+  },
+  {
+    question: "Är jag bunden att anlita något av köksföretagen?",
+    answer: "Absolut inte. Du får offerter och kan jämföra i lugn och ro utan någon som helst förpliktelse. Det är helt upp till dig om och när du vill gå vidare med ett av företagen.",
+  },
+  {
+    question: "Hur vet jag att köksföretagen håller hög kvalitet?",
+    answer: "Alla köksföretag i vårt nätverk genomgår en noggrann granskning. Vi kontrollerar referenser, certifieringar och kundomdömen innan de blir en del av Kökstorget. Vi samarbetar bara med företag vi själva skulle anlita.",
+  },
+  {
+    question: "Hur lång tid tar det att få offerter?",
+    answer: "Normalt får du dina första offerter inom 1–3 arbetsdagar efter att du skickat in din förfrågan. Tiden kan variera beroende på projektets omfattning och säsong.",
+  },
+  {
+    question: "Kan jag använda tjänsten för både renovering och nybygge?",
+    answer: "Ja, Kökstorget passar oavsett om du renoverar ditt befintliga kök eller planerar kök i ett nybygge. Våra partners hanterar alla typer av köksprojekt.",
+  },
+  {
+    question: "Vilka områden täcker ni?",
+    answer: "Vi har partners över hela Sverige, med extra stark närvaro i storstadsregionerna. Om det inte finns en partner i just ditt område meddelar vi dig direkt och jobbar på att utöka nätverket.",
+  },
+  {
+    question: "Vad händer efter att jag skickat in min förfrågan?",
+    answer: "Våra matchade köksföretag kontaktar dig direkt med skräddarsydda förslag och offerter. Du bestämmer sedan i din egen takt om du vill boka ett möte, be om fler detaljer eller gå vidare.",
+  },
+];
+
 const values = [
   {
     number: "01",
@@ -191,6 +226,43 @@ const About = () => {
                     {item.text}
                   </p>
                 </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-24 px-6 bg-muted/30">
+        <div className="container mx-auto max-w-3xl">
+          <motion.div className="mb-16 text-center" {...fadeUp}>
+            <p className="text-[11px] tracking-[0.3em] uppercase text-muted-foreground mb-4">
+              Vanliga frågor
+            </p>
+            <h2 className="font-display text-3xl md:text-5xl font-light leading-tight">
+              Har du frågor? Vi har <em className="font-normal">svaren</em>
+            </h2>
+          </motion.div>
+
+          <div className="space-y-0">
+            {faqs.map((faq, i) => (
+              <motion.div
+                key={i}
+                className="border-t border-border last:border-b"
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.05 }}
+              >
+                <details className="group py-6">
+                  <summary className="flex items-center justify-between cursor-pointer list-none">
+                    <h3 className="text-base md:text-lg font-medium pr-4">{faq.question}</h3>
+                    <span className="text-muted-foreground text-xl transition-transform group-open:rotate-45 shrink-0">+</span>
+                  </summary>
+                  <p className="text-muted-foreground font-light leading-relaxed mt-4 max-w-2xl">
+                    {faq.answer}
+                  </p>
+                </details>
               </motion.div>
             ))}
           </div>
