@@ -67,6 +67,16 @@ const SiteHeader = ({ variant = "transparent" }: SiteHeaderProps) => {
           >
             Om oss
           </Link>
+          <Link
+            to="/anslut"
+            className={`text-[11px] tracking-[0.25em] uppercase font-light transition-colors ${
+              isTransparent
+                ? "text-white/70 hover:text-white"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Anslut
+          </Link>
         </nav>
       </div>
     </motion.header>
