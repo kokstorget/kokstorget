@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import Seo from "@/components/Seo";
-import aboutTeam from "@/assets/about-team.jpg";
+import aboutTeam from "@/assets/about_kitchen.png";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -135,7 +135,7 @@ const About = () => {
           <motion.div {...fadeUp}>
             <img
               src={aboutTeam}
-              alt="Teamet bakom Kökstorget"
+              alt="Modernt skandinaviskt kök med ljust trä och industriell takbelysning"
               className="w-full aspect-[3/2] object-cover mb-16"
               width={1200}
               height={800}
