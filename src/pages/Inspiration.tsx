@@ -82,7 +82,7 @@ const Inspiration = () => {
       <SiteHeader variant="solid" />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 px-6">
+      <section className="pt-32 pb-20 px-3 sm:px-6">
         <div className="container mx-auto max-w-4xl text-center">
           <motion.div
             initial={{ opacity: 0 }}
@@ -133,7 +133,7 @@ const Inspiration = () => {
       </section>
 
       {/* Gallery grid — 3 columns like Nordiska Kök */}
-      <section className="pb-32 px-6">
+      <section className="pb-32 px-3 sm:px-6">
         <div className="container mx-auto max-w-5xl">
           <div className="grid md:grid-cols-3 gap-8">
             {projects.map((project, i) => (
@@ -168,12 +168,12 @@ const Inspiration = () => {
       </section>
 
       {/* Divider */}
-      <div className="container mx-auto max-w-5xl px-6">
+      <div className="container mx-auto max-w-5xl px-3 sm:px-6">
         <hr className="border-border" />
       </div>
 
       {/* CTA */}
-      <section className="py-24 px-6 bg-primary text-primary-foreground">
+      <section className="py-24 px-3 sm:px-6 bg-primary text-primary-foreground">
         <div className="container mx-auto max-w-3xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -201,7 +201,7 @@ const Inspiration = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-6 border-t border-border">
+      <footer className="py-12 px-3 sm:px-6 border-t border-border">
         <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <span className="font-display text-xl font-light">Kökstorget</span>
           <span className="text-xs text-muted-foreground tracking-wide">

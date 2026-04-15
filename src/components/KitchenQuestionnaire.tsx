@@ -253,7 +253,7 @@ const KitchenQuestionnaire = ({ onComplete }: { onComplete: () => void }) => {
   };
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-32 pb-16 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col items-center justify-center px-3 sm:px-6 pt-32 pb-16 overflow-hidden">
       {/* Premium layered background */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-secondary/40 to-background" />
       <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[900px] -z-10 rounded-full bg-accent/10 blur-[120px]" />
@@ -429,7 +429,7 @@ const KitchenQuestionnaire = ({ onComplete }: { onComplete: () => void }) => {
           <Button
             onClick={goNext}
             disabled={!canProceed() || isSubmitting}
-            className="rounded-full px-6"
+            className="rounded-full px-3 sm:px-6"
           >
             {currentStep === steps.length - 1 ? (
               isSubmitting ? (

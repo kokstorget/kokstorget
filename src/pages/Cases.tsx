@@ -56,7 +56,7 @@ const Cases = () => {
       <SiteHeader variant="solid" />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 px-6">
+      <section className="pt-32 pb-20 px-3 sm:px-6">
         <div className="container mx-auto max-w-4xl text-center">
           <motion.p
             className="text-[11px] tracking-[0.3em] uppercase text-muted-foreground mb-6"
@@ -87,7 +87,7 @@ const Cases = () => {
       </section>
 
       {/* Cases */}
-      <section className="pb-32 px-6">
+      <section className="pb-32 px-3 sm:px-6">
         <div className="container mx-auto max-w-5xl">
           {cases.map((item, index) => (
             <motion.article
@@ -147,7 +147,7 @@ const Cases = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-24 px-6 border-t border-border/50">
+      <section className="py-24 px-3 sm:px-6 border-t border-border/50">
         <div className="container mx-auto max-w-2xl text-center">
           <motion.h2
             className="font-display text-3xl md:text-4xl font-light text-foreground mb-6"
@@ -185,7 +185,7 @@ const Cases = () => {
 
       {/* Footer */}
       <footer className="py-12 border-t border-border/50">
-        <div className="container mx-auto px-6 text-center">
+        <div className="container mx-auto px-3 sm:px-6 text-center">
           <p className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
             © 2026 Kökstorget — Alla rättigheter förbehållna
           </p>

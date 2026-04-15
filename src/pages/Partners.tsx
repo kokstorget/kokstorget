@@ -65,7 +65,7 @@ const Partners = () => {
       <SiteHeader variant="solid" />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 px-6">
+      <section className="pt-32 pb-20 px-3 sm:px-6">
         <div className="container mx-auto max-w-4xl text-center">
           <motion.p
             className="text-[11px] tracking-[0.3em] uppercase text-muted-foreground mb-6"
@@ -93,7 +93,7 @@ const Partners = () => {
       </section>
 
       {/* Partners list */}
-      <section className="pb-32 px-6">
+      <section className="pb-32 px-3 sm:px-6">
         <div className="container mx-auto max-w-5xl">
           <div className="space-y-16">
             {partners.map((partner, index) => (
@@ -139,7 +139,7 @@ const Partners = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-24 px-6 bg-secondary/30">
+      <section className="py-24 px-3 sm:px-6 bg-secondary/30">
         <div className="container mx-auto max-w-3xl text-center">
           <motion.div {...fadeUp}>
             <p className="text-[11px] tracking-[0.3em] uppercase text-muted-foreground mb-6">
@@ -159,7 +159,7 @@ const Partners = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-6 border-t border-border">
+      <footer className="py-12 px-3 sm:px-6 border-t border-border">
         <div className="container mx-auto text-center">
           <p className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
             © {new Date().getFullYear()} Kökstorget

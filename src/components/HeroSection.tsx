@@ -22,7 +22,7 @@ const HeroSection = ({ onStartQuiz }: HeroSectionProps) => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10 pb-20 md:pb-28">
+      <div className="container mx-auto px-3 sm:px-6 relative z-10 pb-20 md:pb-28">
         <div className="max-w-2xl">
           <motion.h1
             className="text-4xl md:text-6xl lg:text-7xl font-light leading-[1.1] mb-6 text-white"

@@ -144,7 +144,7 @@ const Connect = () => {
     return (
       <div className="min-h-screen bg-background">
         <SiteHeader variant="solid" />
-        <div className="pt-32 pb-24 flex flex-col items-center justify-center text-center px-6">
+        <div className="pt-32 pb-24 flex flex-col items-center justify-center text-center px-3 sm:px-6">
           <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.5 }}>
             <CheckCircle2 className="w-16 h-16 text-accent mx-auto mb-6" />
             <h1 className="font-display text-4xl md:text-5xl font-light text-foreground mb-4">
@@ -164,7 +164,7 @@ const Connect = () => {
       <SiteHeader variant="solid" />
 
       {/* Hero */}
-      <section className="pt-32 pb-16 px-6">
+      <section className="pt-32 pb-16 px-3 sm:px-6">
         <div className="container mx-auto max-w-4xl text-center">
           <motion.h1
             className="font-display text-4xl md:text-6xl font-light text-foreground leading-tight mb-8"
@@ -184,12 +184,12 @@ const Connect = () => {
       </section>
 
       {/* Benefits */}
-      <section className="pb-20 px-6">
-        <div className="container mx-auto max-w-5xl grid md:grid-cols-3 gap-8">
+      <section className="pb-20 px-3 sm:px-6">
+        <div className="container mx-auto max-w-5xl grid md:grid-cols-3 gap-5 sm:gap-8">
           {benefits.map((b, i) => (
             <motion.div
               key={b.title}
-              className="bg-card rounded-[10px] p-8 text-center"
+              className="bg-card rounded-[10px] p-6 sm:p-8 text-center"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -204,10 +204,10 @@ const Connect = () => {
       </section>
 
       {/* Form */}
-      <section className="pb-24 px-6">
+      <section className="pb-24 px-3 sm:px-6">
         <div className="container mx-auto max-w-2xl">
           <motion.div
-            className="bg-card rounded-[10px] p-8 md:p-12"
+            className="bg-card rounded-[10px] p-4 sm:p-8 md:p-12"
             {...fadeUp}
           >
             <h2 className="font-display text-2xl md:text-3xl font-light text-foreground mb-2 text-center">
@@ -319,7 +319,7 @@ const Connect = () => {
               <Button
                 type="submit"
                 disabled={isSubmitting || !isValid}
-                className="w-full h-12 text-sm tracking-widest uppercase"
+                className="w-full h-12 px-4 text-xs sm:text-sm tracking-[0.12em] sm:tracking-widest uppercase"
               >
                 {isSubmitting ? (
                   <>
@@ -336,7 +336,7 @@ const Connect = () => {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border/50 py-8 px-6">
+      <footer className="border-t border-border/50 py-8 px-3 sm:px-6">
         <div className="container mx-auto text-center text-muted-foreground text-xs tracking-widest">
           © {new Date().getFullYear()} Kökstorget
         </div>

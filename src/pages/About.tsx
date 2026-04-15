@@ -82,7 +82,7 @@ const About = () => {
       <SiteHeader variant="solid" />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 px-6">
+      <section className="pt-32 pb-20 px-3 sm:px-6">
         <div className="container mx-auto max-w-4xl text-center">
           <motion.p
             className="text-[11px] tracking-[0.3em] uppercase text-muted-foreground mb-6"
@@ -113,7 +113,7 @@ const About = () => {
       </section>
 
       {/* Image + story */}
-      <section className="pb-32 px-6">
+      <section className="pb-32 px-3 sm:px-6">
         <div className="container mx-auto max-w-5xl">
           <motion.div {...fadeUp}>
             <img
@@ -171,7 +171,7 @@ const About = () => {
       </section>
 
       {/* Stats */}
-      <section className="py-20 px-6 border-y border-border">
+      <section className="py-20 px-3 sm:px-6 border-y border-border">
         <div className="container mx-auto max-w-4xl">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
             {stats.map((stat, i) => (
@@ -196,7 +196,7 @@ const About = () => {
       </section>
 
       {/* Values */}
-      <section className="py-24 px-6">
+      <section className="py-24 px-3 sm:px-6">
         <div className="container mx-auto max-w-4xl">
           <motion.div className="mb-16" {...fadeUp}>
             <p className="text-[11px] tracking-[0.3em] uppercase text-muted-foreground mb-4">
@@ -233,7 +233,7 @@ const About = () => {
       </section>
 
       {/* FAQ */}
-      <section className="py-24 px-6 bg-muted/30">
+      <section className="py-24 px-3 sm:px-6 bg-muted/30">
         <div className="container mx-auto max-w-3xl">
           <motion.div className="mb-16 text-center" {...fadeUp}>
             <p className="text-[11px] tracking-[0.3em] uppercase text-muted-foreground mb-4">
@@ -270,7 +270,7 @@ const About = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-24 px-6 bg-primary text-primary-foreground">
+      <section className="py-24 px-3 sm:px-6 bg-primary text-primary-foreground">
         <div className="container mx-auto max-w-3xl text-center">
           <motion.div {...fadeUp}>
             <h2 className="text-3xl md:text-4xl font-light mb-6">
@@ -293,7 +293,7 @@ const About = () => {
 
       {/* Footer */}
       <footer className="py-12 border-t border-border/50">
-        <div className="container mx-auto px-6 text-center">
+        <div className="container mx-auto px-3 sm:px-6 text-center">
           <p className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
             © {new Date().getFullYear()} Kökstorget — Alla rättigheter förbehållna
           </p>
