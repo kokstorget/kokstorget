@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
+import Seo from "@/components/Seo";
 
 import inspoRustic from "@/assets/inspo-rustic-classic.jpg";
 import inspoDarkGreen from "@/assets/inspo-dark-green.jpg";
@@ -79,6 +80,11 @@ const projects: InspirationProject[] = [
 const Inspiration = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Köksinspiration — Idéer och stilar"
+        description="Hitta inspiration till ditt drömkök. Bläddra bland modern, lantlig, skandinavisk och industriell köksdesign — kuraterat av Kökstorget."
+        path="/inspiration"
+      />
       <SiteHeader variant="solid" />
 
       {/* Hero */}

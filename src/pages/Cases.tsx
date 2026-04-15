@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
+import Seo from "@/components/Seo";
 import caseKitchen1 from "@/assets/case-kitchen-1.jpg";
 import caseKitchen2 from "@/assets/case-kitchen-2.jpg";
 import caseKitchen3 from "@/assets/case-kitchen-3.jpg";
@@ -53,6 +54,11 @@ const cases = [
 const Cases = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Kundcase — Verkliga köksprojekt"
+        description="Se verkliga köksprojekt från våra kunder. Lär dig av deras process, val och resultat — och inspireras till ditt eget drömkök."
+        path="/kundcase"
+      />
       <SiteHeader variant="solid" />
 
       {/* Hero */}

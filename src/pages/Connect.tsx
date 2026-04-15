@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import SiteHeader from "@/components/SiteHeader";
+import Seo from "@/components/Seo";
 import { Building2, Users, TrendingUp, CheckCircle2, Loader2 } from "lucide-react";
 
 const PARTNER_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_PARTNER_KEY;
@@ -161,6 +162,11 @@ const Connect = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Anslut ert köksföretag — Bli partner"
+        description="Bli en del av Kökstorget och få kvalificerade leads från kunder som aktivt söker nya kök. Inga anslutningsavgifter — ni betalar bara för leads."
+        path="/anslut"
+      />
       <SiteHeader variant="solid" />
 
       {/* Hero */}

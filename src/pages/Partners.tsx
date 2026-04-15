@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
+import Seo from "@/components/Seo";
 import partnerMarbodal from "@/assets/partner-marbodal.jpg";
 import partnerLucks from "@/assets/partner-lucks.jpg";
 import partnerBallingslov from "@/assets/partner-ballingslov.jpg";
@@ -62,6 +63,11 @@ const fadeUp = {
 const Partners = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Partners — Våra utvalda köksföretag"
+        description="Möt köksföretagen i Kökstorgets nätverk. Kvalitetssäkrade partners över hela Sverige som hjälper dig förverkliga ditt drömkök."
+        path="/partners"
+      />
       <SiteHeader variant="solid" />
 
       {/* Hero */}

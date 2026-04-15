@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
+import Seo from "@/components/Seo";
 import aboutTeam from "@/assets/about-team.jpg";
 
 const fadeUp = {
@@ -77,8 +78,24 @@ const stats = [
 ];
 
 const About = () => {
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.question,
+      acceptedAnswer: { "@type": "Answer", text: f.answer },
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Om oss — Vi gör det enklare att hitta rätt kök"
+        description="Kökstorget är Sveriges oberoende plattform som kopplar samman köksdrömmare med kvalitetssäkrade köksföretag — helt kostnadsfritt."
+        path="/om-oss"
+        jsonLd={faqLd}
+      />
       <SiteHeader variant="solid" />
 
       {/* Hero */}
