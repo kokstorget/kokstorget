@@ -9,6 +9,33 @@ import { Building2, Users, TrendingUp, CheckCircle2, Loader2 } from "lucide-reac
 
 const PARTNER_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_PARTNER_KEY;
 
+type RequiredField = "company" | "contact" | "email" | "phone";
+
+const validators: Record<RequiredField, (v: string) => string> = {
+  company: (v) => (v.trim().length < 2 ? "Ange företagets namn (minst 2 tecken)" : ""),
+  contact: (v) => {
+    const t = v.trim();
+    if (t.length < 2) return "Ange kontaktperson (minst 2 tecken)";
+    if (!/^[A-Za-zÅÄÖåäöÉéÜüØøÆæ\s\-']+$/.test(t)) return "Namnet får endast innehålla bokstäver";
+    return "";
+  },
+  email: (v) => {
+    const t = v.trim();
+    if (!t) return "Ange en e-postadress";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(t)) return "Ange en giltig e-postadress (t.ex. namn@foretag.se)";
+    return "";
+  },
+  phone: (v) => {
+    const t = v.trim();
+    if (!t) return "Ange ett telefonnummer";
+    const digits = t.replace(/[\s\-()]/g, "").replace(/^\+/, "");
+    if (!/^\d+$/.test(digits)) return "Telefonnumret får endast innehålla siffror";
+    if (digits.length < 8) return "Telefonnumret är för kort";
+    if (digits.length > 13) return "Telefonnumret är för långt";
+    return "";
+  },
+};
+
 const benefits = [
   {
     icon: Users,
@@ -46,36 +73,34 @@ const Connect = () => {
     city: "",
     message: "",
   });
+  const [touched, setTouched] = useState<Record<RequiredField, boolean>>({
+    company: false,
+    contact: false,
+    email: false,
+    phone: false,
+  });
+
+  const errors: Record<RequiredField, string> = {
+    company: validators.company(form.company),
+    contact: validators.contact(form.contact),
+    email: validators.email(form.email),
+    phone: validators.phone(form.phone),
+  };
+  const isValid = !errors.company && !errors.contact && !errors.email && !errors.phone;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const name = e.target.name as RequiredField;
+    if (name in touched) setTouched((t) => ({ ...t, [name]: true }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.company || !form.contact || !form.email || !form.phone) {
-      toast({
-        title: "Fyll i alla obligatoriska fält",
-        description: "Företagsnamn, kontaktperson, e-post och telefon krävs.",
-        variant: "destructive",
-      });
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
-      toast({
-        title: "Ogiltig e-postadress",
-        description: "Ange en giltig e-postadress.",
-        variant: "destructive",
-      });
-      return;
-    }
-    const phoneDigits = form.phone.trim().replace(/[\s\-()]/g, "").replace(/^\+/, "");
-    if (!/^\d+$/.test(phoneDigits) || phoneDigits.length < 8 || phoneDigits.length > 13) {
-      toast({
-        title: "Ogiltigt telefonnummer",
-        description: "Ange ett giltigt telefonnummer (8–13 siffror).",
-        variant: "destructive",
-      });
+    if (!isValid) {
+      setTouched({ company: true, contact: true, email: true, phone: true });
       return;
     }
 
@@ -198,13 +223,35 @@ const Connect = () => {
                   <label className="text-xs tracking-widest uppercase text-muted-foreground mb-1.5 block">
                     Företagsnamn *
                   </label>
-                  <Input name="company" value={form.company} onChange={handleChange} placeholder="Ert företagsnamn" />
+                  <Input
+                    name="company"
+                    value={form.company}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    placeholder="Ert företagsnamn"
+                    aria-invalid={touched.company && !!errors.company}
+                    className={touched.company && errors.company ? "border-destructive focus-visible:ring-destructive" : ""}
+                  />
+                  {touched.company && errors.company && (
+                    <p className="mt-1.5 ml-1 text-xs text-destructive">{errors.company}</p>
+                  )}
                 </div>
                 <div>
                   <label className="text-xs tracking-widest uppercase text-muted-foreground mb-1.5 block">
                     Kontaktperson *
                   </label>
-                  <Input name="contact" value={form.contact} onChange={handleChange} placeholder="Förnamn Efternamn" />
+                  <Input
+                    name="contact"
+                    value={form.contact}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    placeholder="Förnamn Efternamn"
+                    aria-invalid={touched.contact && !!errors.contact}
+                    className={touched.contact && errors.contact ? "border-destructive focus-visible:ring-destructive" : ""}
+                  />
+                  {touched.contact && errors.contact && (
+                    <p className="mt-1.5 ml-1 text-xs text-destructive">{errors.contact}</p>
+                  )}
                 </div>
               </div>
 
@@ -213,13 +260,39 @@ const Connect = () => {
                   <label className="text-xs tracking-widest uppercase text-muted-foreground mb-1.5 block">
                     E-post *
                   </label>
-                  <Input name="email" type="email" value={form.email} onChange={handleChange} placeholder="er@foretag.se" />
+                  <Input
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    placeholder="er@foretag.se"
+                    aria-invalid={touched.email && !!errors.email}
+                    className={touched.email && errors.email ? "border-destructive focus-visible:ring-destructive" : ""}
+                  />
+                  {touched.email && errors.email && (
+                    <p className="mt-1.5 ml-1 text-xs text-destructive">{errors.email}</p>
+                  )}
                 </div>
                 <div>
                   <label className="text-xs tracking-widest uppercase text-muted-foreground mb-1.5 block">
                     Telefon *
                   </label>
-                  <Input name="phone" type="tel" value={form.phone} onChange={handleChange} placeholder="070-123 45 67" />
+                  <Input
+                    name="phone"
+                    type="tel"
+                    autoComplete="tel"
+                    value={form.phone}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    placeholder="070-123 45 67"
+                    aria-invalid={touched.phone && !!errors.phone}
+                    className={touched.phone && errors.phone ? "border-destructive focus-visible:ring-destructive" : ""}
+                  />
+                  {touched.phone && errors.phone && (
+                    <p className="mt-1.5 ml-1 text-xs text-destructive">{errors.phone}</p>
+                  )}
                 </div>
               </div>
 
@@ -245,7 +318,7 @@ const Connect = () => {
 
               <Button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || !isValid}
                 className="w-full h-12 text-sm tracking-widest uppercase"
               >
                 {isSubmitting ? (
