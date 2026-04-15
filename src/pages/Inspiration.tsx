@@ -155,7 +155,7 @@ const Inspiration = () => {
                     height={800}
                   />
                 </div>
-                <h3 className="font-display text-lg md:text-xl font-light mb-2 group-hover:underline underline-offset-4 transition-all">
+                <h3 className="font-display text-lg md:text-xl font-light mb-2">
                   {project.title}
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed font-light">
