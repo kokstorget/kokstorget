@@ -17,7 +17,9 @@ const NAV_LINKS = [
 
 const SiteHeader = ({ variant = "transparent" }: SiteHeaderProps) => {
   const isTransparent = variant === "transparent";
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(() =>
+    typeof window !== "undefined" && window.scrollY > 16
+  );
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 

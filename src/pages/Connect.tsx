@@ -164,7 +164,7 @@ const Connect = () => {
           {benefits.map((b, i) => (
             <motion.div
               key={b.title}
-              className="bg-card rounded-lg p-8 text-center"
+              className="bg-card rounded-[10px] p-8 text-center"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -182,7 +182,7 @@ const Connect = () => {
       <section className="pb-24 px-6">
         <div className="container mx-auto max-w-2xl">
           <motion.div
-            className="bg-card rounded-lg p-8 md:p-12"
+            className="bg-card rounded-[10px] p-8 md:p-12"
             {...fadeUp}
           >
             <h2 className="font-display text-2xl md:text-3xl font-light text-foreground mb-2 text-center">
