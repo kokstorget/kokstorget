@@ -149,7 +149,7 @@ const Partners = () => {
               Få offerter från våra partners
             </h2>
             <Link
-              to="/"
+              to="/?start=quiz"
               className="inline-block border border-foreground text-foreground px-10 py-4 text-[11px] tracking-[0.25em] uppercase font-light hover:bg-foreground hover:text-background transition-all duration-500"
             >
               Starta din köksresa

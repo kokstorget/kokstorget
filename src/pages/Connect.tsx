@@ -5,7 +5,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import SiteHeader from "@/components/SiteHeader";
-import { Building2, Users, TrendingUp, CheckCircle2 } from "lucide-react";
+import { Building2, Users, TrendingUp, CheckCircle2, Loader2 } from "lucide-react";
+
+const PARTNER_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_PARTNER_KEY;
 
 const benefits = [
   {
@@ -35,6 +37,7 @@ const fadeUp = {
 const Connect = () => {
   const { toast } = useToast();
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     company: "",
     contact: "",
@@ -48,7 +51,7 @@ const Connect = () => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.company || !form.contact || !form.email || !form.phone) {
       toast({
@@ -58,8 +61,58 @@ const Connect = () => {
       });
       return;
     }
-    setSubmitted(true);
-    toast({ title: "Tack för ert intresse!", description: "Vi återkommer inom kort." });
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
+      toast({
+        title: "Ogiltig e-postadress",
+        description: "Ange en giltig e-postadress.",
+        variant: "destructive",
+      });
+      return;
+    }
+    const phoneDigits = form.phone.trim().replace(/[\s\-()]/g, "").replace(/^\+/, "");
+    if (!/^\d+$/.test(phoneDigits) || phoneDigits.length < 8 || phoneDigits.length > 13) {
+      toast({
+        title: "Ogiltigt telefonnummer",
+        description: "Ange ett giltigt telefonnummer (8–13 siffror).",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const payload = {
+        access_key: PARTNER_ACCESS_KEY,
+        subject: `Ny partneranmälan från ${form.company}`,
+        from_name: "Kokstorget — Partneranmälan",
+        Företag: form.company,
+        Kontaktperson: form.contact,
+        "E-post": form.email,
+        Telefon: form.phone,
+        "Ort / Region": form.city || "—",
+        Meddelande: form.message || "—",
+      };
+
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = await res.json();
+      if (!result.success) throw new Error(result.message || "Submit failed");
+
+      setSubmitted(true);
+      toast({ title: "Tack för ert intresse!", description: "Vi återkommer inom kort." });
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: "Något gick fel",
+        description: "Försök igen om en stund eller kontakta oss direkt.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -190,8 +243,19 @@ const Connect = () => {
                 />
               </div>
 
-              <Button type="submit" className="w-full h-12 text-sm tracking-widest uppercase">
-                Skicka intresseanmälan
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full h-12 text-sm tracking-widest uppercase"
+              >
+                {isSubmitting ? (
+                  <>
+                    Skickar...
+                    <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+                  </>
+                ) : (
+                  "Skicka intresseanmälan"
+                )}
               </Button>
             </form>
           </motion.div>

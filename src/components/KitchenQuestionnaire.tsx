@@ -1,10 +1,59 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Send, Check, Camera, X, ImagePlus } from "lucide-react";
+import { ArrowLeft, ArrowRight, Send, Check, Camera, X, ImagePlus, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+
+const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+
+type ContactField = "name" | "email" | "phone" | "city";
+
+const validators: Record<ContactField, (v: string) => string> = {
+  name: (v) => {
+    const t = v.trim();
+    if (t.length < 2) return "Ange ditt namn (minst 2 tecken)";
+    if (!/^[A-Za-zÅÄÖåäöÉéÜüØøÆæ\s\-']+$/.test(t)) return "Namnet får endast innehålla bokstäver";
+    return "";
+  },
+  email: (v) => {
+    const t = v.trim();
+    if (!t) return "Ange en e-postadress";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(t)) return "Ange en giltig e-postadress (t.ex. namn@exempel.se)";
+    return "";
+  },
+  phone: (v) => {
+    const t = v.trim();
+    if (!t) return "Ange ett telefonnummer";
+    const digits = t.replace(/[\s\-()]/g, "").replace(/^\+/, "");
+    if (!/^\d+$/.test(digits)) return "Telefonnumret får endast innehålla siffror";
+    if (digits.length < 8) return "Telefonnumret är för kort";
+    if (digits.length > 13) return "Telefonnumret är för långt";
+    return "";
+  },
+  city: (v) => {
+    const t = v.trim();
+    if (t.length < 2) return "Ange din ort";
+    if (!/^[A-Za-zÅÄÖåäöÉéÜüØøÆæ\s\-]+$/.test(t)) return "Ortens namn får endast innehålla bokstäver";
+    return "";
+  },
+};
+
+async function uploadToCloudinary(file: File): Promise<string> {
+  const fd = new FormData();
+  fd.append("file", file);
+  fd.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+  const res = await fetch(
+    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+    { method: "POST", body: fd }
+  );
+  if (!res.ok) throw new Error("Cloudinary upload failed");
+  const data = await res.json();
+  return data.secure_url as string;
+}
 
 interface StepConfig {
   id: string;
@@ -69,7 +118,21 @@ const KitchenQuestionnaire = ({ onComplete }: { onComplete: () => void }) => {
   const [contactInfo, setContactInfo] = useState({ name: "", email: "", phone: "", city: "" });
   const [uploadedImages, setUploadedImages] = useState<{ file: File; preview: string }[]>([]);
   const [direction, setDirection] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [touched, setTouched] = useState<Record<ContactField, boolean>>({
+    name: false,
+    email: false,
+    phone: false,
+    city: false,
+  });
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const contactErrors: Record<ContactField, string> = {
+    name: validators.name(contactInfo.name),
+    email: validators.email(contactInfo.email),
+    phone: validators.phone(contactInfo.phone),
+    city: validators.city(contactInfo.city),
+  };
 
   const step = steps[currentStep];
   const progress = ((currentStep + 1) / steps.length) * 100;
@@ -119,7 +182,7 @@ const KitchenQuestionnaire = ({ onComplete }: { onComplete: () => void }) => {
 
   const canProceed = () => {
     if (step.type === "contact") {
-      return contactInfo.name && contactInfo.email && contactInfo.phone && contactInfo.city;
+      return !contactErrors.name && !contactErrors.email && !contactErrors.phone && !contactErrors.city;
     }
     if (step.type === "text" || step.type === "images") return true;
     const answer = answers[step.id];
@@ -127,10 +190,51 @@ const KitchenQuestionnaire = ({ onComplete }: { onComplete: () => void }) => {
     return !!answer;
   };
 
-  const goNext = () => {
-    if (currentStep === steps.length - 1) {
+  const submitForm = async () => {
+    setIsSubmitting(true);
+    try {
+      const imageUrls = uploadedImages.length
+        ? await Promise.all(uploadedImages.map((img) => uploadToCloudinary(img.file)))
+        : [];
+
+      const styles = Array.isArray(answers.style) ? answers.style.join(", ") : "";
+      const payload = {
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject: `Ny köksförfrågan från ${contactInfo.name}`,
+        from_name: "Kokstorget",
+        Namn: contactInfo.name,
+        "E-post": contactInfo.email,
+        Telefon: contactInfo.phone,
+        "Stad / Ort": contactInfo.city,
+        "Typ av kök": (answers.type as string) || "",
+        Stil: styles,
+        Budget: (answers.budget as string) || "",
+        Tidsram: (answers.timeline as string) || "",
+        "Övriga detaljer": (answers.details as string) || "",
+        Bilder: imageUrls.length ? imageUrls.join("\n") : "Inga bilder bifogade",
+      };
+
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = await res.json();
+      if (!result.success) throw new Error(result.message || "Submit failed");
+
       toast.success("Tack! Dina uppgifter har skickats till våra köksföretag.");
       onComplete();
+    } catch (err) {
+      console.error(err);
+      toast.error("Något gick fel. Försök igen om en stund.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const goNext = () => {
+    if (currentStep === steps.length - 1) {
+      submitForm();
       return;
     }
     setDirection(1);
@@ -149,7 +253,13 @@ const KitchenQuestionnaire = ({ onComplete }: { onComplete: () => void }) => {
   };
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-6 py-12">
+    <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-32 pb-16 overflow-hidden">
+      {/* Premium layered background */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-secondary/40 to-background" />
+      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[900px] -z-10 rounded-full bg-accent/10 blur-[120px]" />
+      <div className="absolute -bottom-40 -right-40 w-[600px] h-[600px] -z-10 rounded-full bg-primary/[0.06] blur-[100px]" />
+      <div className="absolute -bottom-20 -left-40 w-[500px] h-[500px] -z-10 rounded-full bg-accent/5 blur-[100px]" />
+
       {/* Progress bar */}
       <div className="w-full max-w-xl mb-12">
         <div className="flex items-center justify-between mb-3">
@@ -271,32 +381,34 @@ const KitchenQuestionnaire = ({ onComplete }: { onComplete: () => void }) => {
 
             {step.type === "contact" && (
               <div className="grid gap-4">
-                <Input
-                  placeholder="Namn *"
-                  className="text-base rounded-xl py-5"
-                  value={contactInfo.name}
-                  onChange={(e) => setContactInfo({ ...contactInfo, name: e.target.value })}
-                />
-                <Input
-                  placeholder="E-post *"
-                  type="email"
-                  className="text-base rounded-xl py-5"
-                  value={contactInfo.email}
-                  onChange={(e) => setContactInfo({ ...contactInfo, email: e.target.value })}
-                />
-                <Input
-                  placeholder="Telefon *"
-                  type="tel"
-                  className="text-base rounded-xl py-5"
-                  value={contactInfo.phone}
-                  onChange={(e) => setContactInfo({ ...contactInfo, phone: e.target.value })}
-                />
-                <Input
-                  placeholder="Stad / Ort *"
-                  className="text-base rounded-xl py-5"
-                  value={contactInfo.city}
-                  onChange={(e) => setContactInfo({ ...contactInfo, city: e.target.value })}
-                />
+                {(["name", "email", "phone", "city"] as const).map((field) => {
+                  const config = {
+                    name: { placeholder: "Namn *", type: "text", autoComplete: "name" },
+                    email: { placeholder: "E-post *", type: "email", autoComplete: "email" },
+                    phone: { placeholder: "Telefon *", type: "tel", autoComplete: "tel" },
+                    city: { placeholder: "Stad / Ort *", type: "text", autoComplete: "address-level2" },
+                  }[field];
+                  const showError = touched[field] && !!contactErrors[field];
+                  return (
+                    <div key={field}>
+                      <Input
+                        placeholder={config.placeholder}
+                        type={config.type}
+                        autoComplete={config.autoComplete}
+                        aria-invalid={showError}
+                        className={`text-base rounded-xl py-5 ${
+                          showError ? "border-destructive focus-visible:ring-destructive" : ""
+                        }`}
+                        value={contactInfo[field]}
+                        onChange={(e) => setContactInfo({ ...contactInfo, [field]: e.target.value })}
+                        onBlur={() => setTouched((t) => ({ ...t, [field]: true }))}
+                      />
+                      {showError && (
+                        <p className="mt-1.5 ml-1 text-xs text-destructive">{contactErrors[field]}</p>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             )}
           </motion.div>
@@ -307,7 +419,7 @@ const KitchenQuestionnaire = ({ onComplete }: { onComplete: () => void }) => {
           <Button
             variant="ghost"
             onClick={goBack}
-            disabled={currentStep === 0}
+            disabled={currentStep === 0 || isSubmitting}
             className="rounded-full"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -316,14 +428,21 @@ const KitchenQuestionnaire = ({ onComplete }: { onComplete: () => void }) => {
 
           <Button
             onClick={goNext}
-            disabled={!canProceed()}
+            disabled={!canProceed() || isSubmitting}
             className="rounded-full px-6"
           >
             {currentStep === steps.length - 1 ? (
-              <>
-                Skicka förfrågan
-                <Send className="ml-2 h-4 w-4" />
-              </>
+              isSubmitting ? (
+                <>
+                  Skickar...
+                  <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+                </>
+              ) : (
+                <>
+                  Skicka förfrågan
+                  <Send className="ml-2 h-4 w-4" />
+                </>
+              )
             ) : (
               <>
                 Nästa

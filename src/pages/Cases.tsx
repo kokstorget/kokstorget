@@ -174,7 +174,7 @@ const Cases = () => {
             transition={{ delay: 0.2 }}
           >
             <Link
-              to="/"
+              to="/?start=quiz"
               className="inline-block border border-foreground px-10 py-4 text-[11px] tracking-[0.3em] uppercase text-foreground hover:bg-foreground hover:text-background transition-colors duration-300"
             >
               Kom igång

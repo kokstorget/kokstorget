@@ -190,7 +190,7 @@ const Inspiration = () => {
               utvalda köksföretag.
             </p>
             <Link
-              to="/"
+              to="/?start=quiz"
               className="inline-flex items-center gap-3 bg-primary-foreground text-primary px-8 py-4 text-sm tracking-[0.15em] uppercase font-medium hover:bg-primary-foreground/90 transition-colors group"
             >
               Kom igång nu
