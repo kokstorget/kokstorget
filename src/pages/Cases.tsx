@@ -87,8 +87,8 @@ const Cases = () => {
       </section>
 
       {/* Cases */}
-      <section className="pb-32">
-        <div className="container mx-auto max-w-6xl px-6">
+      <section className="pb-32 px-6">
+        <div className="container mx-auto max-w-5xl">
           {cases.map((item, index) => (
             <motion.article
               key={item.id}
@@ -147,8 +147,8 @@ const Cases = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-24 border-t border-border/50">
-        <div className="container mx-auto max-w-2xl text-center px-6">
+      <section className="py-24 px-6 border-t border-border/50">
+        <div className="container mx-auto max-w-2xl text-center">
           <motion.h2
             className="font-display text-3xl md:text-4xl font-light text-foreground mb-6"
             initial={{ opacity: 0 }}

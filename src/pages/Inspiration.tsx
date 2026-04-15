@@ -82,7 +82,7 @@ const Inspiration = () => {
       <SiteHeader variant="solid" />
 
       {/* Hero */}
-      <section className="pt-32 pb-16 px-6">
+      <section className="pt-32 pb-20 px-6">
         <div className="container mx-auto max-w-4xl text-center">
           <motion.div
             initial={{ opacity: 0 }}
@@ -133,8 +133,8 @@ const Inspiration = () => {
       </section>
 
       {/* Gallery grid — 3 columns like Nordiska Kök */}
-      <section className="pb-24 px-6">
-        <div className="container mx-auto max-w-6xl">
+      <section className="pb-32 px-6">
+        <div className="container mx-auto max-w-5xl">
           <div className="grid md:grid-cols-3 gap-8">
             {projects.map((project, i) => (
               <motion.article
@@ -168,7 +168,7 @@ const Inspiration = () => {
       </section>
 
       {/* Divider */}
-      <div className="container mx-auto max-w-6xl px-6">
+      <div className="container mx-auto max-w-5xl px-6">
         <hr className="border-border" />
       </div>
 

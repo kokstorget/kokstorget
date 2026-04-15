@@ -113,7 +113,7 @@ const About = () => {
       </section>
 
       {/* Image + story */}
-      <section className="pb-24 px-6">
+      <section className="pb-32 px-6">
         <div className="container mx-auto max-w-5xl">
           <motion.div {...fadeUp}>
             <img
