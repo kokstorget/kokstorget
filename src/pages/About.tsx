@@ -83,7 +83,7 @@ const About = () => {
 
       {/* Hero */}
       <section className="pt-32 pb-20 px-6">
-        <div className="container mx-auto max-w-4xl">
+        <div className="container mx-auto max-w-4xl text-center">
           <motion.p
             className="text-[11px] tracking-[0.3em] uppercase text-muted-foreground mb-6"
             initial={{ opacity: 0 }}
@@ -101,7 +101,7 @@ const About = () => {
             Vi gör det enklare att hitta <em className="font-normal">rätt kök</em>
           </motion.h1>
           <motion.p
-            className="text-muted-foreground font-light text-lg max-w-2xl leading-relaxed"
+            className="text-muted-foreground font-light text-lg max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}

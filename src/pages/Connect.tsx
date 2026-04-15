@@ -142,13 +142,13 @@ const Connect = () => {
       <section className="pt-32 pb-16 px-6">
         <div className="container mx-auto max-w-4xl text-center">
           <motion.h1
-            className="font-display text-4xl md:text-6xl font-light text-foreground mb-6"
+            className="font-display text-4xl md:text-6xl font-light text-foreground leading-tight mb-8"
             {...fadeUp}
           >
             Anslut ert köksföretag
           </motion.h1>
           <motion.p
-            className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
+            className="text-muted-foreground font-light text-lg max-w-2xl mx-auto leading-relaxed"
             {...fadeUp}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
