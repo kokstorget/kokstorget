@@ -62,7 +62,7 @@ const HeroSection = ({ onStartQuiz }: HeroSectionProps) => {
 
         {/* Minimal trust bar */}
         <motion.div
-          className="mt-16 flex flex-wrap gap-x-10 gap-y-3"
+          className="mt-16 flex flex-col sm:flex-row sm:flex-wrap gap-y-3 sm:gap-x-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.7 }}
