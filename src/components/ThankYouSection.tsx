@@ -6,8 +6,8 @@ const ThankYouSection = () => {
     <section className="relative min-h-screen flex items-center justify-center px-3 sm:px-6 pt-32 pb-16 overflow-hidden">
       {/* Premium layered background */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-secondary/40 to-background" />
-      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[900px] -z-10 rounded-full bg-accent/10 blur-[120px]" />
-      <div className="absolute -bottom-40 -right-40 w-[600px] h-[600px] -z-10 rounded-full bg-primary/[0.06] blur-[100px]" />
+      <div className="hidden md:block absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[900px] -z-10 rounded-full bg-accent/10 blur-[120px]" />
+      <div className="hidden md:block absolute -bottom-40 -right-40 w-[600px] h-[600px] -z-10 rounded-full bg-primary/[0.06] blur-[100px]" />
 
       <motion.div
         className="max-w-lg text-center"
