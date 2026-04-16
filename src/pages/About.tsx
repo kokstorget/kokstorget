@@ -3,7 +3,8 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import Seo from "@/components/Seo";
-import { useFaqs } from "@/hooks/useSanityData";
+import { useFaqs, useAboutPage } from "@/hooks/useSanityData";
+import { urlFor } from "@/lib/sanity";
 import aboutTeam from "@/assets/about_kitchen.png";
 
 const fadeUp = {
@@ -79,7 +80,14 @@ const stats = [
 ];
 
 const About = () => {
+  const { data: aboutContent } = useAboutPage();
   const { data: sanityFaqs } = useFaqs();
+
+  const activeValues = aboutContent?.values?.length
+    ? aboutContent.values.map((v, i) => ({ number: String(i + 1).padStart(2, "0"), title: v.title, text: v.text }))
+    : values;
+  const activeStats = aboutContent?.stats?.length ? aboutContent.stats : stats;
+  const heroImage = aboutContent?.image ? urlFor(aboutContent.image).width(1200).height(800).url() : aboutTeam;
   const activeFaqs = sanityFaqs?.length
     ? sanityFaqs.map((f) => ({ question: f.question, answer: f.answer }))
     : faqs;
@@ -140,7 +148,7 @@ const About = () => {
         <div className="container mx-auto max-w-5xl">
           <motion.div {...fadeUp}>
             <img
-              src={aboutTeam}
+              src={heroImage}
               alt="Modernt skandinaviskt kök med ljust trä och industriell takbelysning"
               className="w-full aspect-[3/2] object-cover mb-16"
               width={1200}
@@ -197,7 +205,7 @@ const About = () => {
       <section className="py-20 px-3 sm:px-6 border-y border-border">
         <div className="container mx-auto max-w-4xl">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
-            {stats.map((stat, i) => (
+            {activeStats.map((stat, i) => (
               <motion.div
                 key={i}
                 className="text-center"
@@ -231,7 +239,7 @@ const About = () => {
           </motion.div>
 
           <div className="grid gap-0">
-            {values.map((item, i) => (
+            {activeValues.map((item, i) => (
               <motion.div
                 key={i}
                 className="grid md:grid-cols-[80px_1fr] gap-4 md:gap-8 py-8 border-t border-border last:border-b"

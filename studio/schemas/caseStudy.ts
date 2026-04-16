@@ -7,34 +7,36 @@ export default defineType({
   fields: [
     defineField({
       name: "title",
-      title: "Titel",
-      type: "string",
-      validation: (r) => r.required(),
-    }),
-    defineField({
-      name: "family",
-      title: "Familj / Kund",
+      title: "Titel / Familjenamn",
       type: "string",
       description: "T.ex. 'Familjen Lindström'",
+      validation: (r) => r.required(),
     }),
     defineField({
       name: "location",
       title: "Plats",
       type: "string",
-      description: "T.ex. 'Stockholm'",
+      description: "T.ex. 'Östermalm, Stockholm'",
     }),
     defineField({
-      name: "description",
-      title: "Beskrivning",
+      name: "style",
+      title: "Stil",
+      type: "string",
+      description: "T.ex. 'Modern valnöt med marmor'",
+    }),
+    defineField({
+      name: "quote",
+      title: "Kundcitat",
       type: "text",
-      rows: 4,
+      rows: 3,
+      description: "Kundens egna ord om upplevelsen",
       validation: (r) => r.required(),
     }),
     defineField({
       name: "budget",
       title: "Budget",
       type: "string",
-      description: "T.ex. '285 000 kr'",
+      description: "T.ex. '250 000 – 350 000 kr'",
     }),
     defineField({
       name: "duration",
@@ -43,10 +45,16 @@ export default defineType({
       description: "T.ex. '8 veckor'",
     }),
     defineField({
-      name: "style",
-      title: "Stil",
+      name: "supplier",
+      title: "Leverantör",
       type: "string",
-      description: "T.ex. 'Skandinavisk modern'",
+      description: "T.ex. 'Nordiska Kök'",
+    }),
+    defineField({
+      name: "projectType",
+      title: "Typ av projekt",
+      type: "string",
+      description: "T.ex. 'Totalrenovering'",
     }),
     defineField({
       name: "image",
@@ -66,6 +74,6 @@ export default defineType({
     { title: "Ordning", name: "order", by: [{ field: "order", direction: "asc" }] },
   ],
   preview: {
-    select: { title: "title", subtitle: "family", media: "image" },
+    select: { title: "title", subtitle: "location", media: "image" },
   },
 });

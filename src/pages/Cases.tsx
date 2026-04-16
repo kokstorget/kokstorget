@@ -59,15 +59,15 @@ const Cases = () => {
     ? sanityCases.map((c) => ({
         id: c._id,
         image: urlFor(c.image).width(1200).height(800).url(),
-        title: c.family || c.title,
+        title: c.title,
         location: c.location || "",
         style: c.style || "",
-        quote: c.description,
+        quote: c.quote || c.description,
         details: {
           budget: c.budget || "",
           tid: c.duration || "",
-          leverantör: "",
-          typ: "",
+          leverantör: c.supplier || "",
+          typ: c.projectType || "",
         },
       }))
     : cases;

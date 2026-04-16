@@ -21,12 +21,14 @@ export interface SanityInspirationProject {
 export interface SanityCaseStudy {
   _id: string;
   title: string;
-  family: string;
   location: string;
+  style: string;
+  quote: string;
   description: string;
   budget: string;
   duration: string;
-  style: string;
+  supplier: string;
+  projectType: string;
   image: object;
   order: number;
 }
@@ -65,7 +67,28 @@ export function useCaseStudies() {
     queryKey: ["sanity", "caseStudies"],
     queryFn: () =>
       sanityClient.fetch(
-        `*[_type == "caseStudy"] | order(order asc) { _id, title, family, location, description, budget, duration, style, image, order }`
+        `*[_type == "caseStudy"] | order(order asc) { _id, title, location, style, quote, description, budget, duration, supplier, projectType, image, order }`
+      ),
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+export interface SanityAboutPage {
+  heroTitle: string;
+  heroSubtitle: string;
+  image: object | null;
+  storyLeft: string;
+  storyRight: string;
+  values: { title: string; text: string }[];
+  stats: { value: string; label: string }[];
+}
+
+export function useAboutPage() {
+  return useQuery<SanityAboutPage | null>({
+    queryKey: ["sanity", "aboutPage"],
+    queryFn: () =>
+      sanityClient.fetch(
+        `*[_type == "aboutPage" && _id == "aboutPage"][0] { heroTitle, heroSubtitle, image, storyLeft, storyRight, values, stats }`
       ),
     staleTime: 1000 * 60 * 5,
   });
