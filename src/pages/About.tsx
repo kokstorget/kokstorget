@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import Seo from "@/components/Seo";
+import { useFaqs } from "@/hooks/useSanityData";
 import aboutTeam from "@/assets/about_kitchen.png";
 
 const fadeUp = {
@@ -78,10 +79,15 @@ const stats = [
 ];
 
 const About = () => {
+  const { data: sanityFaqs } = useFaqs();
+  const activeFaqs = sanityFaqs?.length
+    ? sanityFaqs.map((f) => ({ question: f.question, answer: f.answer }))
+    : faqs;
+
   const faqLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({
+    mainEntity: activeFaqs.map((f) => ({
       "@type": "Question",
       name: f.question,
       acceptedAnswer: { "@type": "Answer", text: f.answer },
@@ -262,7 +268,7 @@ const About = () => {
           </motion.div>
 
           <div className="space-y-0">
-            {faqs.map((faq, i) => (
+            {activeFaqs.map((faq, i) => (
               <motion.div
                 key={i}
                 className="border-t border-border last:border-b"

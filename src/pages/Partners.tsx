@@ -2,55 +2,20 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import Seo from "@/components/Seo";
+import { usePartners } from "@/hooks/useSanityData";
+import { urlFor } from "@/lib/sanity";
 import partnerMarbodal from "@/assets/partner-marbodal.jpg";
 import partnerLucks from "@/assets/partner-lucks.jpg";
 import partnerBallingslov from "@/assets/partner-ballingslov.jpg";
 import partnerNordiska from "@/assets/partner-nordiska.jpg";
 import partnerHimle from "@/assets/partner-himle.jpg";
 
-interface Partner {
-  id: number;
-  name: string;
-  description: string;
-  image: string;
-}
-
-const partners: Partner[] = [
-  {
-    id: 1,
-    name: "Marbodal Göteborg",
-    image: partnerMarbodal,
-    description:
-      "Marbodal är ett av Sveriges mest anrika köksmärken med rötter sedan 1924. Från fabriken i Tidaholm levererar de kök som kombinerar svensk hantverkstradition med modern design. Marbodal Göteborg erbjuder ett brett sortiment – från tidlösa klassiker till samtida, minimalistiska kök – alltid med fokus på hållbarhet och kvalitet.",
-  },
-  {
-    id: 2,
-    name: "Lucks by Robo",
-    image: partnerLucks,
-    description:
-      "Lucks by Robo representerar nästa generation av köksdesign där innovation möter funktion. Med smarta förvaringslösningar och modern skandinavisk estetik skapar de kök som är lika vackra som praktiska. Deras fokus på hållbara material och energieffektiva lösningar gör dem till ett framtidssäkrat val.",
-  },
-  {
-    id: 3,
-    name: "Ballingslöv Kungsbacka",
-    image: partnerBallingslov,
-    description:
-      "Ballingslöv har sedan 1929 varit synonymt med svenska kvalitetskök. Med ett imponerande utbud av stilar, material och färger erbjuder Ballingslöv Kungsbacka skräddarsydda kökslösningar för alla smaker. Varje kök tillverkas med omsorg i Sverige och kombinerar tidlös elegans med modern funktionalitet.",
-  },
-  {
-    id: 4,
-    name: "Nordiska Kök",
-    image: partnerNordiska,
-    description:
-      "Nordiska Kök är kända för sina handbyggda, unika kök som blandar traditionellt hantverk med samtida design. Varje kök är ett konstverk – skräddarsytt efter kundens önskemål med naturliga material som massivt trä, natursten och mässing. Perfekt för den som söker ett kök med karaktär och själ.",
-  },
-  {
-    id: 5,
-    name: "Himle Kök",
-    image: partnerHimle,
-    description:
-      "Himle Kök erbjuder exklusiva kökslösningar med fokus på hantverk och personlig service. Med bas i Västsverige skapar de kök som speglar den skandinaviska livsstilen – rena linjer, naturliga material och genomtänkta detaljer. Från första skiss till färdig installation följer Himle Kök med hela vägen.",
-  },
+const staticPartners = [
+  { id: "1", name: "Marbodal Göteborg", image: partnerMarbodal, description: "Marbodal är ett av Sveriges mest anrika köksmärken med rötter sedan 1924. Från fabriken i Tidaholm levererar de kök som kombinerar svensk hantverkstradition med modern design. Marbodal Göteborg erbjuder ett brett sortiment – från tidlösa klassiker till samtida, minimalistiska kök – alltid med fokus på hållbarhet och kvalitet." },
+  { id: "2", name: "Lucks by Robo", image: partnerLucks, description: "Lucks by Robo representerar nästa generation av köksdesign där innovation möter funktion. Med smarta förvaringslösningar och modern skandinavisk estetik skapar de kök som är lika vackra som praktiska. Deras fokus på hållbara material och energieffektiva lösningar gör dem till ett framtidssäkrat val." },
+  { id: "3", name: "Ballingslöv Kungsbacka", image: partnerBallingslov, description: "Ballingslöv har sedan 1929 varit synonymt med svenska kvalitetskök. Med ett imponerande utbud av stilar, material och färger erbjuder Ballingslöv Kungsbacka skräddarsydda kökslösningar för alla smaker. Varje kök tillverkas med omsorg i Sverige och kombinerar tidlös elegans med modern funktionalitet." },
+  { id: "4", name: "Nordiska Kök", image: partnerNordiska, description: "Nordiska Kök är kända för sina handbyggda, unika kök som blandar traditionellt hantverk med samtida design. Varje kök är ett konstverk – skräddarsytt efter kundens önskemål med naturliga material som massivt trä, natursten och mässing. Perfekt för den som söker ett kök med karaktär och själ." },
+  { id: "5", name: "Himle Kök", image: partnerHimle, description: "Himle Kök erbjuder exklusiva kökslösningar med fokus på hantverk och personlig service. Med bas i Västsverige skapar de kök som speglar den skandinaviska livsstilen – rena linjer, naturliga material och genomtänkta detaljer. Från första skiss till färdig installation följer Himle Kök med hela vägen." },
 ];
 
 const fadeUp = {
@@ -61,6 +26,16 @@ const fadeUp = {
 };
 
 const Partners = () => {
+  const { data: sanityPartners } = usePartners();
+  const partners = sanityPartners?.length
+    ? sanityPartners.map((p) => ({
+        id: p._id,
+        name: p.name,
+        description: p.description,
+        image: urlFor(p.image).width(1024).height(768).url(),
+      }))
+    : staticPartners;
+
   return (
     <div className="min-h-screen bg-background">
       <Seo
@@ -102,9 +77,9 @@ const Partners = () => {
       <section className="pb-32 px-3 sm:px-6">
         <div className="container mx-auto max-w-5xl">
           <div className="space-y-16">
-            {partners.map((partner, index) => (
+            {partners.map((p, index) => (
               <motion.article
-                key={partner.id}
+                key={p.id}
                 className="border-t border-border pt-12"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -118,8 +93,8 @@ const Partners = () => {
                 <div className={`grid md:grid-cols-2 gap-10 items-start ${index % 2 === 1 ? "md:direction-rtl" : ""}`}>
                   <div className="overflow-hidden rounded-sm">
                     <img
-                      src={partner.image}
-                      alt={`Kök av ${partner.name}`}
+                      src={p.image}
+                      alt={`Kök av ${p.name}`}
                       loading="lazy"
                       width={1024}
                       height={768}
@@ -131,10 +106,10 @@ const Partners = () => {
                       Partner {String(index + 1).padStart(2, "0")}
                     </span>
                     <h2 className="font-display text-2xl md:text-3xl font-light text-foreground mb-4">
-                      {partner.name}
+                      {p.name}
                     </h2>
                     <p className="text-muted-foreground font-light leading-relaxed text-sm md:text-base">
-                      {partner.description}
+                      {p.description}
                     </p>
                   </div>
                 </div>

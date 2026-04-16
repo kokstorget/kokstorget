@@ -25,3 +25,7 @@ dist-ssr
 
 # Claude Code
 .claude/
+
+# Sanity Studio
+studio/node_modules
+studio/dist

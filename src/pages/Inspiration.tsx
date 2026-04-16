@@ -3,6 +3,8 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import Seo from "@/components/Seo";
+import { useInspirationProjects } from "@/hooks/useSanityData";
+import { urlFor } from "@/lib/sanity";
 
 import inspoRustic from "@/assets/inspo-rustic-classic.jpg";
 import inspoDarkGreen from "@/assets/inspo-dark-green.jpg";
@@ -78,6 +80,14 @@ const projects: InspirationProject[] = [
 ];
 
 const Inspiration = () => {
+  const { data: sanityProjects } = useInspirationProjects();
+  const activeProjects = sanityProjects?.length
+    ? sanityProjects.map((p) => ({
+        image: urlFor(p.image).width(800).height(600).url(),
+        title: p.title,
+        description: p.description,
+      }))
+    : projects;
   return (
     <div className="min-h-screen bg-background">
       <Seo
@@ -142,7 +152,7 @@ const Inspiration = () => {
       <section className="pb-32 px-3 sm:px-6">
         <div className="container mx-auto max-w-5xl">
           <div className="grid md:grid-cols-3 gap-8">
-            {projects.map((project, i) => (
+            {activeProjects.map((project, i) => (
               <motion.article
                 key={i}
                 className="group cursor-pointer"

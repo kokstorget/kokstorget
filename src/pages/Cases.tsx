@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import Seo from "@/components/Seo";
+import { useCaseStudies } from "@/hooks/useSanityData";
+import { urlFor } from "@/lib/sanity";
 import caseKitchen1 from "@/assets/case-kitchen-1.jpg";
 import caseKitchen2 from "@/assets/case-kitchen-2.jpg";
 import caseKitchen3 from "@/assets/case-kitchen-3.jpg";
@@ -52,6 +54,24 @@ const cases = [
 ];
 
 const Cases = () => {
+  const { data: sanityCases } = useCaseStudies();
+  const activeCases = sanityCases?.length
+    ? sanityCases.map((c) => ({
+        id: c._id,
+        image: urlFor(c.image).width(1200).height(800).url(),
+        title: c.family || c.title,
+        location: c.location || "",
+        style: c.style || "",
+        quote: c.description,
+        details: {
+          budget: c.budget || "",
+          tid: c.duration || "",
+          leverantör: "",
+          typ: "",
+        },
+      }))
+    : cases;
+
   return (
     <div className="min-h-screen bg-background">
       <Seo
@@ -95,7 +115,7 @@ const Cases = () => {
       {/* Cases */}
       <section className="pb-32 px-3 sm:px-6">
         <div className="container mx-auto max-w-5xl">
-          {cases.map((item, index) => (
+          {activeCases.map((item, index) => (
             <motion.article
               key={item.id}
               className={`grid md:grid-cols-2 gap-12 md:gap-20 items-center mb-32 last:mb-0 ${
