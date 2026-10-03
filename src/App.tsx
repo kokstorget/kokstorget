@@ -11,6 +11,8 @@ import Cases from "./pages/Cases.tsx";
 import About from "./pages/About.tsx";
 import Partners from "./pages/Partners.tsx";
 import Connect from "./pages/Connect.tsx";
+import Guides from "./pages/Guides.tsx";
+import GuideArticle from "./pages/GuideArticle.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -38,6 +40,8 @@ const App = () => (
           <Route path="/om-oss" element={<About />} />
           <Route path="/partners" element={<Partners />} />
           <Route path="/anslut" element={<Connect />} />
+          <Route path="/guider" element={<Guides />} />
+          <Route path="/guider/:slug" element={<GuideArticle />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

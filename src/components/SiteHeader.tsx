@@ -10,6 +10,7 @@ interface SiteHeaderProps {
 const NAV_LINKS = [
   { to: "/inspiration", label: "Inspiration" },
   { to: "/kundcase", label: "Kundcase" },
+  { to: "/guider", label: "Guider & Tips" },
   { to: "/partners", label: "Partners" },
   { to: "/om-oss", label: "Om oss" },
   { to: "/anslut", label: "Anslut Företag" },

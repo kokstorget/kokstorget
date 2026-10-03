@@ -36,6 +36,9 @@ export default defineConfig({
               .title("Kundcase")
               .child(S.documentTypeList("caseStudy").title("Kundcase")),
             S.listItem()
+              .title("Guider & Tips")
+              .child(S.documentTypeList("guide").title("Guider & Tips")),
+            S.listItem()
               .title("Vanliga frågor")
               .child(S.documentTypeList("faq").title("Vanliga frågor")),
           ]),

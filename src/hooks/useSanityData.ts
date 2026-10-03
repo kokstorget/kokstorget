@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { sanityClient } from "@/lib/sanity";
+import type { PortableTextBlock } from "@portabletext/react";
 
 export interface SanityPartner {
   _id: string;
@@ -100,6 +101,31 @@ export function useFaqs() {
     queryFn: () =>
       sanityClient.fetch(
         `*[_type == "faq"] | order(order asc) { _id, question, answer, order }`
+      ),
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+export interface SanityGuide {
+  _id: string;
+  title: string;
+  slug: string;
+  category: string | null;
+  author: string | null;
+  publishedAt: string;
+  excerpt: string;
+  mainImage: { alt?: string } | null;
+  body: PortableTextBlock[];
+}
+
+const GUIDE_FIELDS = `_id, title, "slug": slug.current, category, author, publishedAt, excerpt, mainImage, body`;
+
+export function useGuides() {
+  return useQuery<SanityGuide[]>({
+    queryKey: ["sanity", "guides"],
+    queryFn: () =>
+      sanityClient.fetch(
+        `*[_type == "guide" && defined(slug.current)] | order(publishedAt desc) { ${GUIDE_FIELDS} }`
       ),
     staleTime: 1000 * 60 * 5,
   });
