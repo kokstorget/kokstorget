@@ -101,13 +101,13 @@ const Guides = () => {
             {visibleGuides.map((guide, i) => (
               <motion.article
                 key={guide.id}
-                className="group"
+                className="group h-full"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: (i % 3) * 0.1 }}
               >
-                <Link to={`/guider/${guide.slug}`} className="block">
+                <Link to={`/guider/${guide.slug}`} className="flex flex-col h-full">
                   <div className="overflow-hidden mb-5">
                     <img
                       src={guide.image}
@@ -129,7 +129,7 @@ const Guides = () => {
                   <p className="text-sm text-muted-foreground leading-relaxed font-light mb-4">
                     {guide.excerpt}
                   </p>
-                  <span className="inline-flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase text-foreground">
+                  <span className="mt-auto self-start inline-flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase text-foreground">
                     Läs guiden
                     <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                   </span>
