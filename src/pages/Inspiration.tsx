@@ -6,15 +6,11 @@ import Seo from "@/components/Seo";
 import { useInspirationProjects } from "@/hooks/useSanityData";
 import { urlFor } from "@/lib/sanity";
 
-import inspoRustic from "@/assets/inspo-rustic-classic.jpg";
-import inspoDarkGreen from "@/assets/inspo-dark-green.jpg";
-import inspoShaker from "@/assets/inspo-shaker-white.jpg";
-import inspoJapandi from "@/assets/inspo-japandi.jpg";
-import inspoNavy from "@/assets/inspo-navy.jpg";
-import inspoCottage from "@/assets/inspo-cottage.jpg";
+import inspoShaker from "@/assets/inspo-shaker.jpg";
+import inspoRetro from "@/assets/inspo-retro-50tal.jpg";
+import inspoSpegel from "@/assets/inspo-spegel.jpg";
+import inspoModern from "@/assets/inspo-modern-slata.jpg";
 import inspoBeige from "@/assets/inspo-beige-fluted.jpg";
-import inspoIndustrial from "@/assets/inspo-industrial.jpg";
-import inspoTerracotta from "@/assets/inspo-terracotta.jpg";
 
 interface InspirationProject {
   image: string;
@@ -24,58 +20,34 @@ interface InspirationProject {
 
 const projects: InspirationProject[] = [
   {
-    image: inspoRustic,
-    title: "Det klassiska köket med rustik elegans",
-    description:
-      "Traditionell charm möter skandinavisk design — ett tidlöst kök i varm ek med marmorbänkskiva och mässingsdetaljer som skapar en elegant och inbjudande helhet.",
-  },
-  {
-    image: inspoJapandi,
-    title: "Det ljusa Japandi-köket",
-    description:
-      "Minimalistiskt kök i ljus ek där naturlig värme möter arkitektonisk precision. Betongbänkskiva och rena linjer skapar ett balanserat, harmoniskt uttryck.",
-  },
-  {
-    image: inspoDarkGreen,
-    title: "Moderna köket i djupgrönt",
-    description:
-      "Handtagslösa luckor i matt mörkgrönt kombinerat med terrazzobänkskiva och skandinavisk minimalism — ett modigt val som ger köket stark personlighet.",
-  },
-  {
     image: inspoShaker,
-    title: "Det ljusa shakerköket",
+    title: "Tidlöst Shakerkök",
     description:
-      "Klassiskt shakerkök i ljusa toner med marmorstänkskydd, generös köksö och varma trägolv. En tidlös design som aldrig går ur mode.",
+      "Ett harmoniskt shakerkök där klassiska ramluckor möter ett modernt och avskalat uttryck. Den mjuka färgsättningen tillsammans med de traditionella snickeridetaljerna skapar en varm och ombonad miljö. Ett kök som känns gediget och tidlöst, med en design som passar lika naturligt i sekelskifteshem som i moderna bostäder.",
   },
   {
-    image: inspoNavy,
-    title: "Eleganta köket i marinblått",
+    image: inspoRetro,
+    title: "Retro & 50-talsfunkis",
     description:
-      "Djupblå luckor med mässingsbeslag, Calcatta-marmor och fiskbensgolv i ek skapar ett dramatiskt och lyxigt kök med stark karaktär.",
+      "Ett lekfullt kök med tydliga influenser från svensk 50-talsdesign. Rundade former, karaktäristiska luckor och tidstypiska detaljer ger köket en nostalgisk känsla utan att det upplevs gammaldags. Kombinationen av funktionella lösningar och personlig färgsättning skapar ett charmigt kök där den svenska funkistraditionen får nytt liv.",
+  },
+  {
+    image: inspoSpegel,
+    title: "Klassiskt spegelkök",
+    description:
+      "Ett elegant kök där profilerade spegelluckor och genomtänkta detaljer skapar en tydlig känsla av traditionellt snickeri. De klassiska fronterna ger rummet djup och karaktär samtidigt som den balanserade färgsättningen håller helheten lugn. Resultatet är ett sofistikerat kök med ett uttryck som står sig långt bortom tillfälliga trender.",
+  },
+  {
+    image: inspoModern,
+    title: "Modernt kök med släta fronter",
+    description:
+      "Rena linjer och släta fronter ger köket ett modernt och arkitektoniskt uttryck. Avsaknaden av onödiga detaljer låter proportioner, material och färgsättning stå i centrum. De diskreta greppen förstärker den minimalistiska känslan och skapar en sammanhängande köksmiljö som känns både rymlig, elegant och funktionell.",
   },
   {
     image: inspoBeige,
-    title: "Raffinerade köket med räfflade fronter",
+    title: "Skräddarsytt kök",
     description:
-      "Eleganta räfflade fronter i sandbeige, kvartsitbänkskiva och integrerade vitvaror. Mjuk belysning och rena ytor för en sofistikerad känsla.",
-  },
-  {
-    image: inspoCottage,
-    title: "Träköket i fjällstugan",
-    description:
-      "Rustikt kök med synliga bjälkar, natursten och massiv träbänk som smälter samman med den omgivande naturen. Värme och autenticitet i varje detalj.",
-  },
-  {
-    image: inspoIndustrial,
-    title: "Det industriella köket",
-    description:
-      "Rostfria ytor, betongväggar och öppna hyllor i stål och trä. Professionell spis och loftkänsla för den som älskar rå, urban design.",
-  },
-  {
-    image: inspoTerracotta,
-    title: "Medelhavsinspirerade köket",
-    description:
-      "Varma terrakottatoner, valvbågar och naturstengolv skapar en unik fusion av skandinavisk minimalism och medelhavets värme.",
+      "Ett personligt kök där måttanpassade fronter skapar känslan av platsbyggd inredning. Genomtänkta linjer och noggrant anpassade detaljer gör att köket harmonierar med rummets arkitektur. Kombinationen av individuell färgsättning, specialanpassade fronter och smart förvaring ger ett kök som känns unikt utformat för bostaden.",
   },
 ];
 
