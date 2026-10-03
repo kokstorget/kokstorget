@@ -111,7 +111,7 @@ const Inspiration = () => {
           >
             Se{" "}
             <Link
-              to="/"
+              to="/partners"
               className="underline underline-offset-4 hover:text-foreground transition-colors font-medium"
             >
               pris via våra partners
