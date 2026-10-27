@@ -54,6 +54,21 @@ export default defineType({
       validation: (r) => r.required().max(220),
     }),
     defineField({
+      name: "seoTitle",
+      title: "SEO-titel",
+      type: "string",
+      description: "Titel i Google, max ca 50 tecken (\" | Kökstorget\" läggs till). Lämna tom för att använda rubriken.",
+      validation: (r) => r.max(60),
+    }),
+    defineField({
+      name: "seoDescription",
+      title: "SEO-beskrivning",
+      type: "text",
+      rows: 2,
+      description: "Text under titeln i Google, 120–155 tecken. Lämna tom för att använda ingressen.",
+      validation: (r) => r.max(160),
+    }),
+    defineField({
       name: "mainImage",
       title: "Huvudbild",
       type: "image",

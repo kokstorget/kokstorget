@@ -4,8 +4,10 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import Seo from "@/components/Seo";
+import SiteFooter from "@/components/SiteFooter";
 import { useGuides } from "@/hooks/useSanityData";
 import { fallbackGuides, fromSanity, readingTime } from "@/lib/guides";
+import { SITE_URL, WEBSITE_ID } from "@/lib/seo";
 
 const ALL = "Alla";
 
@@ -24,9 +26,25 @@ const Guides = () => {
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title="Guider & Tips — Allt om att planera ditt kök"
-        description="Praktiska guider och tips om köksrenovering: planering, budget, material och design. Kunskap som hjälper dig att skapa ditt drömkök."
+        title="Köksguider: pris, planering och material"
+        description="Vad kostar ett nytt kök, hur planerar du och vilken bänkskiva ska du välja? Våra guider hjälper dig genom köksrenoveringen."
         path="/guider"
+        breadcrumbs={[{ name: "Guider", path: "/guider" }]}
+        jsonLd={{
+          "@type": "CollectionPage",
+          name: "Guider om köksrenovering och nytt kök",
+          url: `${SITE_URL}/guider`,
+          isPartOf: { "@id": WEBSITE_ID },
+          mainEntity: {
+            "@type": "ItemList",
+            itemListElement: guides.map((g, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              url: `${SITE_URL}/guider/${g.slug}`,
+              name: g.title,
+            })),
+          },
+        }}
       />
       <SiteHeader variant="solid" />
 
@@ -168,16 +186,7 @@ const Guides = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 px-3 sm:px-6 border-t border-border">
-        <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <span className="font-display text-xl font-light">Kökstorget</span>
-          <span className="text-xs text-muted-foreground tracking-wide">
-            © {new Date().getFullYear()} Kökstorget. Alla rättigheter
-            förbehållna.
-          </span>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 };

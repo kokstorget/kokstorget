@@ -1,13 +1,14 @@
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
+import { toPlainText } from "@portabletext/react";
 import SiteHeader from "@/components/SiteHeader";
 import Seo from "@/components/Seo";
+import SiteFooter from "@/components/SiteFooter";
 import GuideBody from "@/components/GuideBody";
 import { useGuides } from "@/hooks/useSanityData";
 import { fallbackGuides, formatDate, fromSanity, readingTime } from "@/lib/guides";
-
-const SITE_URL = "https://kokstorget.se";
+import { ORGANIZATION_ID, SITE_URL, WEBSITE_ID, absoluteUrl } from "@/lib/seo";
 
 const GuideArticle = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -48,25 +49,39 @@ const GuideArticle = () => {
   }
 
   const minutes = readingTime(guide.body);
-  const absoluteImage = guide.image.startsWith("http") ? guide.image : `${SITE_URL}${guide.image}`;
+  const absoluteImage = absoluteUrl(guide.image);
+  const url = `${SITE_URL}/guider/${guide.slug}`;
 
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title={guide.title}
-        description={guide.excerpt}
+        title={guide.seoTitle || guide.title}
+        description={guide.seoDescription || guide.excerpt}
         path={`/guider/${guide.slug}`}
         image={absoluteImage}
+        type="article"
+        breadcrumbs={[
+          { name: "Guider", path: "/guider" },
+          { name: guide.title, path: `/guider/${guide.slug}` },
+        ]}
         jsonLd={{
-          "@context": "https://schema.org",
-          "@type": "Article",
+          "@type": "BlogPosting",
+          "@id": `${url}#article`,
           headline: guide.title,
           description: guide.excerpt,
           image: absoluteImage,
           datePublished: guide.publishedAt,
-          author: { "@type": guide.author && guide.author !== "Kökstorget" ? "Person" : "Organization", name: guide.author || "Kökstorget" },
-          publisher: { "@type": "Organization", name: "Kökstorget", url: SITE_URL },
-          mainEntityOfPage: `${SITE_URL}/guider/${guide.slug}`,
+          dateModified: guide.updatedAt || guide.publishedAt,
+          inLanguage: "sv-SE",
+          articleSection: guide.category || undefined,
+          wordCount: toPlainText(guide.body).split(/\s+/).filter(Boolean).length,
+          author:
+            guide.author && guide.author !== "Kökstorget"
+              ? { "@type": "Person", name: guide.author }
+              : { "@id": ORGANIZATION_ID },
+          publisher: { "@id": ORGANIZATION_ID },
+          isPartOf: { "@id": WEBSITE_ID },
+          mainEntityOfPage: url,
         }}
       />
       <SiteHeader variant="solid" />
@@ -217,16 +232,7 @@ const GuideArticle = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 px-3 sm:px-6 border-t border-border">
-        <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <span className="font-display text-xl font-light">Kökstorget</span>
-          <span className="text-xs text-muted-foreground tracking-wide">
-            © {new Date().getFullYear()} Kökstorget. Alla rättigheter
-            förbehållna.
-          </span>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 };

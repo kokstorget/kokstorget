@@ -3,9 +3,10 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import Seo from "@/components/Seo";
+import SiteFooter from "@/components/SiteFooter";
 import { useFaqs, useAboutPage } from "@/hooks/useSanityData";
 import { urlFor } from "@/lib/sanity";
-import aboutTeam from "@/assets/about_kitchen.png";
+import aboutTeam from "@/assets/about_kitchen.jpg";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -93,7 +94,6 @@ const About = () => {
     : faqs;
 
   const faqLd = {
-    "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: activeFaqs.map((f) => ({
       "@type": "Question",
@@ -105,9 +105,10 @@ const About = () => {
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title="Om oss — Vi gör det enklare att hitta rätt kök"
-        description="Kökstorget är Sveriges oberoende plattform som kopplar samman köksdrömmare med kvalitetssäkrade köksföretag — helt kostnadsfritt."
+        title="Om oss – oberoende köksförmedling"
+        description="Kökstorget kopplar ihop dig som ska bygga kök med kvalitetssäkrade köksföretag. Så fungerar det och så väljer vi partners."
         path="/om-oss"
+        breadcrumbs={[{ name: "Om oss", path: "/om-oss" }]}
         jsonLd={faqLd}
       />
       <SiteHeader variant="solid" />
@@ -322,14 +323,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 border-t border-border/50">
-        <div className="container mx-auto px-3 sm:px-6 text-center">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
-            © {new Date().getFullYear()} Kökstorget — Alla rättigheter förbehållna
-          </p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 };

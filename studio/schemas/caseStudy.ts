@@ -61,6 +61,9 @@ export default defineType({
       title: "Bild",
       type: "image",
       options: { hotspot: true },
+      fields: [
+        defineField({ name: "alt", title: "Alternativtext", type: "string", description: "Beskriv vad bilden visar, t.ex. \"Shakerkök i grönt med mässingsknoppar\"" }),
+      ],
       validation: (r) => r.required(),
     }),
     defineField({

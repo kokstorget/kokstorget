@@ -2,13 +2,25 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import Seo from "@/components/Seo";
+import SiteFooter from "@/components/SiteFooter";
 import { useCaseStudies } from "@/hooks/useSanityData";
 import { urlFor } from "@/lib/sanity";
 import caseKitchen1 from "@/assets/case-kitchen-1.jpg";
 import caseKitchen2 from "@/assets/case-kitchen-2.jpg";
 import caseKitchen3 from "@/assets/case-kitchen-3.jpg";
 
-const cases = [
+interface CaseItem {
+  id: string | number;
+  image: string;
+  imageAlt?: string;
+  title: string;
+  location: string;
+  style: string;
+  quote: string;
+  details: Record<string, string>;
+}
+
+const cases: CaseItem[] = [
   {
     id: 1,
     image: caseKitchen1,
@@ -55,10 +67,11 @@ const cases = [
 
 const Cases = () => {
   const { data: sanityCases } = useCaseStudies();
-  const activeCases = sanityCases?.length
+  const activeCases: CaseItem[] = sanityCases?.length
     ? sanityCases.map((c) => ({
         id: c._id,
         image: urlFor(c.image).width(1200).height(800).url(),
+        imageAlt: c.image?.alt,
         title: c.title,
         location: c.location || "",
         style: c.style || "",
@@ -75,9 +88,10 @@ const Cases = () => {
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title="Kundcase — Verkliga köksprojekt"
-        description="Se verkliga köksprojekt från våra kunder. Lär dig av deras process, val och resultat — och inspireras till ditt eget drömkök."
+        title="Köksrenovering – verkliga kundprojekt"
+        description="Se kök som våra kunder renoverat genom Kökstorget: val, budget och resultat. Låt dig inspireras inför ditt eget projekt."
         path="/kundcase"
+        breadcrumbs={[{ name: "Kundcase", path: "/kundcase" }]}
       />
       <SiteHeader variant="solid" />
 
@@ -129,7 +143,7 @@ const Cases = () => {
               <div className={index % 2 === 1 ? "md:order-2" : ""}>
                 <img
                   src={item.image}
-                  alt={`Kök hos ${item.title}`}
+                  alt={item.imageAlt || [item.style, item.location].filter(Boolean).join(", ") || `Kök hos ${item.title}`}
                   className="w-full aspect-[4/3] object-cover"
                   loading="lazy"
                   width={1024}
@@ -209,14 +223,7 @@ const Cases = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 border-t border-border/50">
-        <div className="container mx-auto px-3 sm:px-6 text-center">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
-            © 2026 Kökstorget — Alla rättigheter förbehållna
-          </p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 };

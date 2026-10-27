@@ -3,8 +3,10 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import Seo from "@/components/Seo";
+import SiteFooter from "@/components/SiteFooter";
 import { useInspirationProjects } from "@/hooks/useSanityData";
 import { urlFor } from "@/lib/sanity";
+import { SITE_URL, WEBSITE_ID, absoluteUrl } from "@/lib/seo";
 
 import inspoShaker from "@/assets/inspo-shaker.jpg";
 import inspoRetro from "@/assets/inspo-retro-50tal.jpg";
@@ -15,6 +17,7 @@ import inspoBeige from "@/assets/inspo-beige-fluted.jpg";
 interface InspirationProject {
   image: string;
   title: string;
+  imageAlt: string;
   description: string;
 }
 
@@ -22,30 +25,35 @@ const projects: InspirationProject[] = [
   {
     image: inspoShaker,
     title: "Tidlöst Shakerkök",
+    imageAlt: "Shakerkök med klassiska ramluckor i mjuk färgsättning",
     description:
       "Ett harmoniskt shakerkök där klassiska ramluckor möter ett modernt och avskalat uttryck. Den mjuka färgsättningen tillsammans med de traditionella snickeridetaljerna skapar en varm och ombonad miljö. Ett kök som känns gediget och tidlöst, med en design som passar lika naturligt i sekelskifteshem som i moderna bostäder.",
   },
   {
     image: inspoRetro,
     title: "Retro & 50-talsfunkis",
+    imageAlt: "Kök i retrostil med influenser från svensk 50-talsfunkis",
     description:
       "Ett lekfullt kök med tydliga influenser från svensk 50-talsdesign. Rundade former, karaktäristiska luckor och tidstypiska detaljer ger köket en nostalgisk känsla utan att det upplevs gammaldags. Kombinationen av funktionella lösningar och personlig färgsättning skapar ett charmigt kök där den svenska funkistraditionen får nytt liv.",
   },
   {
     image: inspoSpegel,
     title: "Klassiskt spegelkök",
+    imageAlt: "Kök med profilerade spegelluckor i klassisk stil",
     description:
       "Ett elegant kök där profilerade spegelluckor och genomtänkta detaljer skapar en tydlig känsla av traditionellt snickeri. De klassiska fronterna ger rummet djup och karaktär samtidigt som den balanserade färgsättningen håller helheten lugn. Resultatet är ett sofistikerat kök med ett uttryck som står sig långt bortom tillfälliga trender.",
   },
   {
     image: inspoModern,
     title: "Modernt kök med släta fronter",
+    imageAlt: "Modernt kök med släta fronter och diskreta grepp",
     description:
       "Rena linjer och släta fronter ger köket ett modernt och arkitektoniskt uttryck. Avsaknaden av onödiga detaljer låter proportioner, material och färgsättning stå i centrum. De diskreta greppen förstärker den minimalistiska känslan och skapar en sammanhängande köksmiljö som känns både rymlig, elegant och funktionell.",
   },
   {
     image: inspoBeige,
     title: "Skräddarsytt kök",
+    imageAlt: "Skräddarsytt kök med måttanpassade fronter",
     description:
       "Ett personligt kök där måttanpassade fronter skapar känslan av platsbyggd inredning. Genomtänkta linjer och noggrant anpassade detaljer gör att köket harmonierar med rummets arkitektur. Kombinationen av individuell färgsättning, specialanpassade fronter och smart förvaring ger ett kök som känns unikt utformat för bostaden.",
   },
@@ -57,15 +65,33 @@ const Inspiration = () => {
     ? sanityProjects.map((p) => ({
         image: urlFor(p.image).width(800).height(600).url(),
         title: p.title,
+        imageAlt: p.image?.alt || p.title,
         description: p.description,
       }))
     : projects;
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title="Köksinspiration — Idéer och stilar"
-        description="Hitta inspiration till ditt drömkök. Bläddra bland modern, lantlig, skandinavisk och industriell köksdesign — kuraterat av Kökstorget."
+        title="Köksinspiration: shakerkök, funkis & moderna kök"
+        description="Inspiration för ditt nya kök: tidlösa shakerkök, retro 50-talsfunkis, spegelkök och moderna släta fronter. Hitta stilen och få offert."
         path="/inspiration"
+        breadcrumbs={[{ name: "Inspiration", path: "/inspiration" }]}
+        jsonLd={{
+          "@type": "CollectionPage",
+          name: "Köksinspiration och köksstilar",
+          url: `${SITE_URL}/inspiration`,
+          isPartOf: { "@id": WEBSITE_ID },
+          mainEntity: {
+            "@type": "ItemList",
+            itemListElement: activeProjects.map((project, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              name: project.title,
+              description: project.description,
+              image: absoluteUrl(project.image),
+            })),
+          },
+        }}
       />
       <SiteHeader variant="solid" />
 
@@ -136,7 +162,7 @@ const Inspiration = () => {
                 <div className="overflow-hidden mb-5">
                   <img
                     src={project.image}
-                    alt={project.title}
+                    alt={project.imageAlt}
                     className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105"
                     loading={i < 3 ? undefined : "lazy"}
                     width={1200}
@@ -188,16 +214,7 @@ const Inspiration = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 px-3 sm:px-6 border-t border-border">
-        <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <span className="font-display text-xl font-light">Kökstorget</span>
-          <span className="text-xs text-muted-foreground tracking-wide">
-            © {new Date().getFullYear()} Kökstorget. Alla rättigheter
-            förbehållna.
-          </span>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 };

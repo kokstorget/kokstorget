@@ -14,6 +14,9 @@ export interface Guide {
   author: string;
   publishedAt: string;
   excerpt: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  updatedAt?: string;
   image: string;
   imageAlt: string;
   body: PortableTextBlock[];
@@ -118,6 +121,9 @@ export function fromSanity(g: SanityGuide): Guide {
     author: g.author || "",
     publishedAt: g.publishedAt,
     excerpt: g.excerpt || "",
+    seoTitle: g.seoTitle || undefined,
+    seoDescription: g.seoDescription || undefined,
+    updatedAt: g._updatedAt,
     image: g.mainImage ? urlFor(g.mainImage).width(1600).height(1000).url() : "",
     imageAlt: g.mainImage?.alt || g.title,
     body: g.body || [],

@@ -2,15 +2,25 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import Seo from "@/components/Seo";
+import SiteFooter from "@/components/SiteFooter";
 import { usePartners } from "@/hooks/useSanityData";
 import { urlFor } from "@/lib/sanity";
+import { SITE_URL, WEBSITE_ID, absoluteUrl } from "@/lib/seo";
 import partnerMarbodal from "@/assets/partner-marbodal.jpg";
 import partnerLucks from "@/assets/partner-lucks.jpg";
 import partnerBallingslov from "@/assets/partner-ballingslov.jpg";
 import partnerNordiska from "@/assets/partner-nordiska.jpg";
 import partnerHimle from "@/assets/partner-himle.jpg";
 
-const staticPartners = [
+interface PartnerItem {
+  id: string;
+  name: string;
+  image: string;
+  imageAlt?: string;
+  description: string;
+}
+
+const staticPartners: PartnerItem[] = [
   { id: "1", name: "Marbodal Göteborg", image: partnerMarbodal, description: "Marbodal är ett av Sveriges mest anrika köksmärken med rötter sedan 1924. Från fabriken i Tidaholm levererar de kök som kombinerar svensk hantverkstradition med modern design. Marbodal Göteborg erbjuder ett brett sortiment – från tidlösa klassiker till samtida, minimalistiska kök – alltid med fokus på hållbarhet och kvalitet." },
   { id: "2", name: "Lucks by Robo", image: partnerLucks, description: "Lucks by Robo representerar nästa generation av köksdesign där innovation möter funktion. Med smarta förvaringslösningar och modern skandinavisk estetik skapar de kök som är lika vackra som praktiska. Deras fokus på hållbara material och energieffektiva lösningar gör dem till ett framtidssäkrat val." },
   { id: "3", name: "Ballingslöv Kungsbacka", image: partnerBallingslov, description: "Ballingslöv har sedan 1929 varit synonymt med svenska kvalitetskök. Med ett imponerande utbud av stilar, material och färger erbjuder Ballingslöv Kungsbacka skräddarsydda kökslösningar för alla smaker. Varje kök tillverkas med omsorg i Sverige och kombinerar tidlös elegans med modern funktionalitet." },
@@ -27,21 +37,42 @@ const fadeUp = {
 
 const Partners = () => {
   const { data: sanityPartners } = usePartners();
-  const partners = sanityPartners?.length
+  const partners: PartnerItem[] = sanityPartners?.length
     ? sanityPartners.map((p) => ({
         id: p._id,
         name: p.name,
         description: p.description,
         image: urlFor(p.image).width(1024).height(768).url(),
+        imageAlt: p.image?.alt,
       }))
     : staticPartners;
 
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title="Partners — Våra utvalda köksföretag"
-        description="Möt köksföretagen i Kökstorgets nätverk. Kvalitetssäkrade partners över hela Sverige som hjälper dig förverkliga ditt drömkök."
+        title="Köksföretag – våra kvalitetssäkrade partners"
+        description="Möt köksföretagen i vårt nätverk, från platsbyggda kök till kompletta köksrenoveringar. Jämför och få offert från flera samtidigt."
         path="/partners"
+        breadcrumbs={[{ name: "Partners", path: "/partners" }]}
+        jsonLd={{
+          "@type": "CollectionPage",
+          name: "Köksföretag i Kökstorgets nätverk",
+          url: `${SITE_URL}/partners`,
+          isPartOf: { "@id": WEBSITE_ID },
+          mainEntity: {
+            "@type": "ItemList",
+            itemListElement: partners.map((p, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              item: {
+                "@type": "HomeAndConstructionBusiness",
+                name: p.name,
+                description: p.description,
+                image: absoluteUrl(p.image),
+              },
+            })),
+          },
+        }}
       />
       <SiteHeader variant="solid" />
 
@@ -94,7 +125,7 @@ const Partners = () => {
                   <div className="overflow-hidden rounded-sm">
                     <img
                       src={p.image}
-                      alt={`Kök av ${p.name}`}
+                      alt={p.imageAlt || `Kök från ${p.name}`}
                       loading="lazy"
                       width={1024}
                       height={768}
@@ -139,14 +170,7 @@ const Partners = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 px-3 sm:px-6 border-t border-border">
-        <div className="container mx-auto text-center">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
-            © {new Date().getFullYear()} Kökstorget
-          </p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 };

@@ -14,7 +14,7 @@ const HeroSection = ({ onStartQuiz }: HeroSectionProps) => {
       <div className="absolute inset-0">
         <img
           src={kitchenHero}
-          alt="Modernt skandinaviskt kök"
+          alt="Kök i valnöt med köksö, bänkskiva i travertin och mässingsblandare"
           className="w-full h-full object-cover"
           width={1920}
           height={1080}
@@ -30,8 +30,10 @@ const HeroSection = ({ onStartQuiz }: HeroSectionProps) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.15 }}
           >
-            Hitta ditt{" "}
-            <em className="font-normal">drömkök</em>
+            <span className="block text-xs md:text-sm tracking-[0.3em] uppercase text-white/70 mb-5">
+              Jämför offerter från köksföretag
+            </span>
+            Hitta ditt <em className="font-normal">drömkök</em>
           </motion.h1>
 
           <motion.p

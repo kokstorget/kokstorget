@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import SiteHeader from "@/components/SiteHeader";
 import Seo from "@/components/Seo";
+import SiteFooter from "@/components/SiteFooter";
 import { Building2, Users, TrendingUp, CheckCircle2, Loader2 } from "lucide-react";
 
 const PARTNER_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_PARTNER_KEY;
@@ -163,9 +164,10 @@ const Connect = () => {
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title="Anslut ert köksföretag — Bli partner"
-        description="Bli en del av Kökstorget och få kvalificerade leads från kunder som aktivt söker nya kök. Inga anslutningsavgifter — ni betalar bara för leads."
+        title="Bli partner – få kundförfrågningar om nya kök"
+        description="Anslut ert köksföretag och få kvalificerade förfrågningar från kunder som planerar nytt kök. Ingen anslutningsavgift, ni betalar per lead."
         path="/anslut"
+        breadcrumbs={[{ name: "Anslut företag", path: "/anslut" }]}
       />
       <SiteHeader variant="solid" />
 
@@ -341,12 +343,7 @@ const Connect = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-border/50 py-8 px-3 sm:px-6">
-        <div className="container mx-auto text-center text-muted-foreground text-xs tracking-widest">
-          © {new Date().getFullYear()} Kökstorget
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 };
