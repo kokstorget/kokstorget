@@ -70,8 +70,9 @@ const GuideArticle = () => {
           headline: guide.title,
           description: guide.excerpt,
           image: absoluteImage,
-          datePublished: guide.publishedAt,
-          dateModified: guide.updatedAt || guide.publishedAt,
+          // Full ISO datetime with time zone; fallback guides only have a date
+          datePublished: new Date(guide.publishedAt).toISOString(),
+          dateModified: new Date(guide.updatedAt || guide.publishedAt).toISOString(),
           inLanguage: "sv-SE",
           articleSection: guide.category || undefined,
           wordCount: toPlainText(guide.body).split(/\s+/).filter(Boolean).length,
